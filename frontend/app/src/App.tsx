@@ -13,7 +13,7 @@ function App() {
         <Button onClick={increment}>Increment</Button>
       </div>
     </MantineProvider>
-  )
+  );
 }
 
-export default App
+export default App;
