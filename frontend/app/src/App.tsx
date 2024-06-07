@@ -1,6 +1,7 @@
 import '@mantine/core/styles.css';
 import { Button, MantineProvider } from '@mantine/core';
 import { useState } from 'react';
+import AppLayout from './components/layout/AppLayout.tsx';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -8,10 +9,12 @@ function App() {
 
   return (
     <MantineProvider>
-      <div className="counter">
-        <p>Current count: {count}</p>
-        <Button onClick={increment}>Increment</Button>
-      </div>
+      <AppLayout>
+        <div className="counter">
+          <p>Current count: {count}</p>
+          <Button onClick={increment}>Increment</Button>
+        </div>
+      </AppLayout>
     </MantineProvider>
   );
 }
