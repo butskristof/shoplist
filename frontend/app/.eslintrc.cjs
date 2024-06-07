@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es2020: true
+    es2020: true,
   },
   extends: [
     'eslint:all',
@@ -12,30 +12,30 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'mantine',
     'plugin:@typescript-eslint/recommended',
-    'eslint-config-prettier' // disables conflicting Prettier rules in ESLint
+    'eslint-config-prettier', // disables conflicting Prettier rules in ESLint
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json', // for mantine
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
   },
   settings: {
     react: { version: 'detect' },
-    "import/resolver": {
-      "node": {
-        "paths": [
-          "src"
+    'import/resolver': {
+      'node': {
+        'paths': [
+          'src',
         ],
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
-        ]
-      }
-    }
+        'extensions': [
+          '.js',
+          '.jsx',
+          '.ts',
+          '.tsx',
+        ],
+      },
+    },
   },
   plugins: ['react-refresh', 'import'],
   rules: {
@@ -43,7 +43,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    'import/newline-after-import': ['error', { count: 1}],
-    "react/react-in-jsx-scope": "off"
+    'import/newline-after-import': ['error', { count: 1 }],
+    'react/react-in-jsx-scope': 'off',
   },
-}
+};
