@@ -10,14 +10,17 @@ function App() {
   return (
     <MantineProvider>
       <AppLayout>
-        <div className="counter">
+        <div
+          className="counter"
+          style={{ display: 'none' }}
+        >
           <p>Current count: {count}</p>
           <Button onClick={increment}>Increment</Button>
-          {Array(100)
-            .fill('some content')
-            .map((c, i) => (
-              <p key={i}>{c}</p>
-            ))}
+          {/* eslint-disable-next-line no-constant-binary-expression */}
+          {false &&
+            Array(100)
+              .fill('some content')
+              .map((c, i) => <p key={i}>{c}</p>)}
         </div>
       </AppLayout>
     </MantineProvider>

@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { LuShoppingCart } from 'react-icons/lu';
 import classes from './AppHeader.module.scss';
 
 interface Props {
@@ -8,15 +9,8 @@ interface Props {
 const AppHeader: FC<Props> = ({ className }) => (
   <header className={`${className} ${classes.header}`}>
     <div className={classes.brand}>
+      <LuShoppingCart size={36} />
       <div>Shoplist</div>
-    </div>
-    <div className="toggle"></div>
-    <div className="content">
-      <ul className="links">
-        <li>
-          <a href="#">Home</a>
-        </li>
-      </ul>
     </div>
   </header>
 );
