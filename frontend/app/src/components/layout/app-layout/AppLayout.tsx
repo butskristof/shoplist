@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import AppHeader from '../app-header/AppHeader.tsx';
-import classes from './AppLayout.module.css';
+import classes from './AppLayout.module.scss';
 
 interface Props {
   children: ReactNode;
