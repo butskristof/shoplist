@@ -13,11 +13,11 @@ function App() {
         <div className="counter">
           <p>Current count: {count}</p>
           <Button onClick={increment}>Increment</Button>
-          {/* eslint-disable-next-line no-constant-binary-expression */}
-          {false &&
-            Array(100)
-              .fill('some content')
-              .map((c, i) => <p key={i}>{c}</p>)}
+          {Array(100)
+            .fill('some content')
+            .map((c, i) => (
+              <p key={i}>{c}</p>
+            ))}
         </div>
       </AppLayout>
     </MantineProvider>

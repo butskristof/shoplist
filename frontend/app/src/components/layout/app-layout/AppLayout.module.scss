@@ -1,0 +1,25 @@
+.layout {
+  min-height: 100vh;
+  //background-color: ;
+  @include flex-column;
+}
+
+.header {
+  flex-shrink: 0;
+}
+
+.body {
+  flex-grow: 1;
+  @include flex-column;
+
+  .page {
+    flex-grow: 1;
+    padding-inline: var(--mantine-spacing-md)
+  }
+
+  .footer {
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+}
