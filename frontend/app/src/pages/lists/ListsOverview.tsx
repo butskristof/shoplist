@@ -1,16 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-
-const getLists = () => fetch('http://localhost:3000/lists').then((r) => r.json());
+import { useShoplistsApiLists } from '../../hooks/api/shoplists-api.ts';
 
 const ListsOverview = () => {
-  const { data: lists = [] } = useQuery({
-    queryKey: ['lists'],
-    queryFn: getLists,
-  });
+  const { data: lists = [] } = useShoplistsApiLists();
 
   return (
     <div>
+      <h1>Lists</h1>
       <ul>
         {lists.map((l) => (
           <li key={l.id}>
