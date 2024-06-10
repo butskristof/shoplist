@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Shoplist from '../../components/shoplist/Shoplist.tsx';
 
 const getList = (id) =>
@@ -14,6 +14,9 @@ const ListDetail = () => {
 
   return (
     <div>
+      <div>
+        <Link to="/lists">Back to overview</Link>
+      </div>
       {list && (
         <Shoplist
           name={list.name}
