@@ -1,16 +1,25 @@
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 import Shoplist from '../../components/shoplist/Shoplist.tsx';
 
-const LIST = {
-  name: 'Groceries',
-  items: ['Pesto', 'Penne'],
-};
+const getList = (id) =>
+  fetch(`http://localhost:3000/lists/${id}?_embed=items`).then((r) => r.json());
 
-const ListDetail = () => (
-  <div className="counter">
-    <Shoplist
-      name={LIST.name}
-      items={LIST.items}
-    />
-  </div>
-);
+const ListDetail = () => {
+  const { id } = useParams();
+  const { data: list = null } = useQuery({
+    queryKey: ['lists', id],
+    queryFn: () => getList(id),
+  });
+  return (
+    <div>
+      {list && (
+        <Shoplist
+          name={list.name}
+          items={list.items}
+        />
+      )}
+    </div>
+  );
+};
 export default ListDetail;

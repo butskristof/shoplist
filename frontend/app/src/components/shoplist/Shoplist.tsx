@@ -3,7 +3,8 @@ import ShoplistItem from '../shoplist-item/ShoplistItem.tsx';
 
 interface Props {
   name: string;
-  items: string[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  items: any[];
 }
 
 const Shoplist: FC<Props> = ({ name, items }) => (
@@ -11,8 +12,8 @@ const Shoplist: FC<Props> = ({ name, items }) => (
     <h2>{name}</h2>
     <ul>
       {items.map((i) => (
-        <li key={i}>
-          <ShoplistItem name={i} />
+        <li key={i.id}>
+          <ShoplistItem name={i.name} />
         </li>
       ))}
     </ul>
