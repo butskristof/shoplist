@@ -1,16 +1,20 @@
 import '@mantine/core/styles.css';
-import { Button, MantineProvider } from '@mantine/core';
-import { useState } from 'react';
+import { MantineProvider } from '@mantine/core';
+import Shoplist from './components/shoplist/Shoplist.tsx';
+
+const LIST = {
+  name: 'Groceries',
+  items: ['Pesto', 'Penne'],
+};
 
 function App() {
-  const [count, setCount] = useState(0);
-  const increment = () => setCount(count + 1);
-
   return (
     <MantineProvider>
       <div className="counter">
-        <p>Current count: {count}</p>
-        <Button onClick={increment}>Increment</Button>
+        <Shoplist
+          name={LIST.name}
+          items={LIST.items}
+        />
       </div>
     </MantineProvider>
   );
