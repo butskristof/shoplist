@@ -12,6 +12,7 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'mantine',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@tanstack/eslint-plugin-query/recommended',
     'eslint-config-prettier', // disables conflicting Prettier rules in ESLint
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],

@@ -1,17 +1,18 @@
 import '@mantine/core/styles.css';
-import { Button, MantineProvider } from '@mantine/core';
-import { useState } from 'react';
+import { MantineProvider } from '@mantine/core';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import AppRouter from './components/common/AppRouter.tsx';
+
+const queryClient = new QueryClient();
 
 function App() {
-  const [count, setCount] = useState(0);
-  const increment = () => setCount(count + 1);
-
   return (
     <MantineProvider>
-      <div className="counter">
-        <p>Current count: {count}</p>
-        <Button onClick={increment}>Increment</Button>
-      </div>
+      <QueryClientProvider client={queryClient}>
+        <AppRouter />
+        <ReactQueryDevtools />
+      </QueryClientProvider>
     </MantineProvider>
   );
 }

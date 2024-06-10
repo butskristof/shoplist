@@ -1,0 +1,36 @@
+{
+  "lists": [
+    {
+      "id": "559A03B6-B724-4686-96FE-A24F4CE95436",
+      "name": "Groceries"
+    },
+    {
+      "id": "AA8913D2-4949-4D88-832B-6773A9951185",
+      "name": "Interior"
+    },
+    {
+      "id": "B93AD806-4AA9-4E02-9A6E-D91FBBD7BA41",
+      "name": "Tech"
+    }
+  ],
+  "items": [
+    {
+      "id": "15CD0207-16F9-4089-B35A-52755667040A",
+      "name": "Pesto",
+      "ticked": true,
+      "listId": "559A03B6-B724-4686-96FE-A24F4CE95436"
+    },
+    {
+      "id": "98DF8523-9EE1-47CC-8784-CB3210BE53CA",
+      "name": "Penne",
+      "ticked": true,
+      "listId": "559A03B6-B724-4686-96FE-A24F4CE95436"
+    },
+    {
+      "id": "4241FCA7-A062-4798-90C7-DFBE79306ED9",
+      "name": "Garlic bread",
+      "ticked": false,
+      "listId": "559A03B6-B724-4686-96FE-A24F4CE95436"
+    }
+  ]
+}
