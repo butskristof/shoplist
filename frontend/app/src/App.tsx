@@ -2,7 +2,8 @@ import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import AppRouter from './components/common/AppRouter.tsx';
+import AppLayout from './components/app/AppLayout.tsx';
+import AppRoutes from './components/app/AppRoutes.tsx';
 
 const queryClient = new QueryClient();
 
@@ -10,7 +11,9 @@ function App() {
   return (
     <MantineProvider>
       <QueryClientProvider client={queryClient}>
-        <AppRouter />
+        <AppLayout>
+          <AppRoutes />
+        </AppLayout>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </MantineProvider>
