@@ -13,7 +13,7 @@ const Shoplist: FC<Props> = ({ name, items }) => (
     <ul>
       {items.map((i) => (
         <li key={i.id}>
-          <ShoplistItem name={i.name} />
+          <ShoplistItem item={i} />
         </li>
       ))}
     </ul>

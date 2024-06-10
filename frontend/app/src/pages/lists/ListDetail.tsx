@@ -11,6 +11,7 @@ const ListDetail = () => {
     queryKey: ['lists', id],
     queryFn: () => getList(id),
   });
+
   return (
     <div>
       {list && (
