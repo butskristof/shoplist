@@ -3,6 +3,14 @@
         {
             "id": "559A03B6-B724-4686-96FE-A24F4CE95436",
             "name": "Groceries"
+        },
+        {
+            "id": "AA8913D2-4949-4D88-832B-6773A9951185",
+            "name": "Interior"
+        },
+        {
+            "id": "B93AD806-4AA9-4E02-9A6E-D91FBBD7BA41",
+            "name": "Tech"
         }
     ],
     "items": [
