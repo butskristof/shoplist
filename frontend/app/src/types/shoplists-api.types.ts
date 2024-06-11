@@ -13,4 +13,5 @@ export interface ShoplistItem {
   id: string;
   name: string;
   ticked: boolean;
+  listId: string;
 }
