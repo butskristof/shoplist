@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-d
 import AboutPage from '@/pages/AboutPage.tsx';
 import ListsPage from '@/pages/lists/ListsPage.tsx';
 import ListPage from '@/pages/lists/ListPage.tsx';
-import AppLayout from '@/components/app/AppLayout.tsx';
+import AppLayout from '@/components/app/layout/AppLayout.tsx';
 
-const AppRoutes = () => (
+const AppRouterProvider = () => (
   <Router>
     <Routes>
       <Route
@@ -38,4 +38,4 @@ const AppRoutes = () => (
   </Router>
 );
 
-export default AppRoutes;
+export default AppRouterProvider;

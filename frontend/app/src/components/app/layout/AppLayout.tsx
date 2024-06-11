@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import classes from './AppLayout.module.scss';
-import AppFooter from '@/components/app/AppFooter.tsx';
-import AppHeader from '@/components/app/AppHeader.tsx';
+import AppFooter from '@/components/app/layout/AppFooter.tsx';
+import AppHeader from '@/components/app/layout/AppHeader.tsx';
 
 const AppLayout = () => (
   <div className={classes.layout}>

@@ -1,6 +1,5 @@
 .layout {
   min-height: 100vh;
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
   @include flex-column;
 }
 
@@ -12,10 +11,12 @@
   flex-grow: 1;
   @include flex-column;
 }
+
 .page {
   flex-grow: 1;
   padding-inline: var(--default-padding);
 }
+
 .footer {
   flex-grow: 0;
   flex-shrink: 0;

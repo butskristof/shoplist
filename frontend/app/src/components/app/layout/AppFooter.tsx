@@ -13,6 +13,7 @@ import classes from './AppFooter.module.scss';
 
 const AppFooter: FC<PropsWithClassName> = ({ className }) => {
   const footerClassName = clsx(className, classes.footer);
+
   const { toggleColorScheme } = useMantineColorScheme();
   const colorScheme = useComputedColorScheme(); // does not return auto
 
