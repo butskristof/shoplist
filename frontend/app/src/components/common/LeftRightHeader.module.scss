@@ -1,0 +1,4 @@
+.header {
+  @include flex-row-justify-between-wrapping;
+  margin-bottom: var(--default-padding);
+}
