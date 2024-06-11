@@ -1,10 +1,11 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Button } from '@mantine/core';
 import { IoAdd } from 'react-icons/io5';
 import { ShoplistWithItems } from '@/types/shoplists-api.types.ts';
 import ShoplistItem from '@/components/lists/detail/ShoplistItem.tsx';
 import classes from './Shoplist.module.scss';
 import LeftRightHeader from '@/components/common/LeftRightHeader.tsx';
+import CreateShoplistItem from '@/components/lists/detail/CreateShoplistItem.tsx';
 
 interface Props {
   list: ShoplistWithItems;
@@ -14,6 +15,8 @@ const Shoplist: FC<Props> = ({ list }) => {
   // sort ticked items to bottom
   const sortedItems = list.items.toSorted((a) => (a.ticked ? 1 : -1));
   const untickedCount = list.items.filter((i) => !i.ticked).length;
+
+  const [showCreate, setShowCreate] = useState(false);
 
   return (
     <div>
@@ -29,10 +32,16 @@ const Shoplist: FC<Props> = ({ list }) => {
         }
         right={
           <div>
-            <Button leftSection={<IoAdd size={20} />}>Add item</Button>
+            <Button
+              leftSection={<IoAdd size={20} />}
+              onClick={() => setShowCreate(true)}
+            >
+              Add item
+            </Button>
           </div>
         }
       />
+      {showCreate && <CreateShoplistItem />}
       <div className={classes.list}>
         {sortedItems.map((i) => (
           <ShoplistItem
@@ -44,4 +53,5 @@ const Shoplist: FC<Props> = ({ list }) => {
     </div>
   );
 };
+
 export default Shoplist;
