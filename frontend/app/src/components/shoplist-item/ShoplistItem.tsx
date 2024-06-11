@@ -15,7 +15,6 @@ interface Props {
 
 const ShoplistItem: FC<Props> = ({ item }) => {
   const queryClient = useQueryClient();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const mutation = useMutation({
     mutationFn: updateItem,
     onSuccess: () => {

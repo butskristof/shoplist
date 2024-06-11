@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useShoplistsApiLists } from '../../hooks/api/shoplists-api.ts';
+import { useShoplistsApiLists } from '@/hooks/api/shoplists-api.ts';
 
-const ListsOverview = () => {
+const ListsPage = () => {
   const { data: lists = [] } = useShoplistsApiLists();
 
   return (
@@ -17,4 +17,4 @@ const ListsOverview = () => {
     </div>
   );
 };
-export default ListsOverview;
+export default ListsPage;

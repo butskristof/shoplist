@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
-import About from '../../pages/About.tsx';
-import ListsOverview from '../../pages/lists/ListsOverview.tsx';
-import ListDetail from '../../pages/lists/ListDetail.tsx';
+import AboutPage from '@/pages/AboutPage.tsx';
+import ListsPage from '@/pages/lists/ListsPage.tsx';
+import ListPage from '@/pages/lists/ListPage.tsx';
 
 const AppRoutes = () => (
   <Router>
@@ -13,16 +13,16 @@ const AppRoutes = () => (
       <Route path="/lists">
         <Route
           index
-          element={<ListsOverview />}
+          element={<ListsPage />}
         />
         <Route
           path=":id"
-          element={<ListDetail />}
+          element={<ListPage />}
         />
       </Route>
       <Route
         path="/about"
-        element={<About />}
+        element={<AboutPage />}
       />
       <Route
         path="*"

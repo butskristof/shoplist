@@ -40,6 +40,17 @@ module.exports = {
   },
   plugins: ['react-refresh', 'import'],
   rules: {
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: [
+          // prevent using relative paths for components imports, prefer absolute with '@/'
+          '../*',
+          // prevent importing all of lodash, prefer using lodash/function
+          '^lodash$',
+        ],
+      },
+    ],
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },

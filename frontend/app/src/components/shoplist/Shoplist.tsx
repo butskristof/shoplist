@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import ShoplistItem from '../shoplist-item/ShoplistItem.tsx';
+import ShoplistItem from '@/components/shoplist-item/ShoplistItem.tsx';
 
 interface Props {
   name: string;
