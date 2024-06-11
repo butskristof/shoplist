@@ -1,11 +1,11 @@
 import { Link, useParams } from 'react-router-dom';
 import { Button } from '@mantine/core';
-import { IoArrowBack, IoHome } from 'react-icons/io5';
+import { IoArrowBack } from 'react-icons/io5';
 import { useShoplistsApiGetList } from '@/data/shoplists-api.ts';
-import NotFound from '@/components/common/NotFound.tsx';
 import EntityLoader from '@/components/common/EntityLoader.tsx';
 import Shoplist from '@/components/lists/detail/Shoplist.tsx';
 import classes from './ListPage.module.scss';
+import ApiError from '@/components/common/ApiError.tsx';
 
 const ListPage = () => {
   // we assume id will be available, otherwise the router
@@ -26,20 +26,11 @@ const ListPage = () => {
         </Button>
       </div>
       {query.isPending && <EntityLoader entity="list" />}
-      {query.isError && query.error.response.status === 404 && (
-        <NotFound
+      {query.isError && (
+        <ApiError
+          error={query.error}
           entity="list"
-          actions={
-            <>
-              <Button
-                component={Link}
-                to="/lists"
-                leftSection={<IoHome />}
-              >
-                Back to list overview
-              </Button>
-            </>
-          }
+          page
         />
       )}
       {query.isSuccess && <Shoplist list={query.data} />}

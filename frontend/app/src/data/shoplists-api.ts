@@ -18,9 +18,8 @@ export const useShoplistsApiGetList = (id: string) =>
 export const useShoplistsApiUpdateItem = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: ShoplistsApi.updateItem,
-    onSuccess: (response: ShoplistItem) => {
+    onSuccess: (response: ShoplistItem) =>
       queryClient.invalidateQueries({
         queryKey: ['lists', response.listId],
-      });
-    },
+      }),
   });

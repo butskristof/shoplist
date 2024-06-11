@@ -54,3 +54,8 @@
 @mixin info-page-actions {
   margin-top: 2rem;
 }
+
+@mixin pre-overflow {
+  overflow-x: auto;
+}
+
