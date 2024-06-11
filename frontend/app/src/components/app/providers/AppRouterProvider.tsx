@@ -3,6 +3,7 @@ import AboutPage from '@/pages/AboutPage.tsx';
 import ListsPage from '@/pages/lists/ListsPage.tsx';
 import ListPage from '@/pages/lists/ListPage.tsx';
 import AppLayout from '@/components/app/layout/AppLayout.tsx';
+import NotFoundPage from '@/pages/NotFoundPage.tsx';
 
 const AppRouterProvider = () => (
   <Router>
@@ -13,7 +14,12 @@ const AppRouterProvider = () => (
       >
         <Route
           index
-          element={<Navigate to="/lists" />}
+          element={
+            <Navigate
+              replace
+              to="/lists"
+            />
+          }
         />
         <Route path="/lists">
           <Route
@@ -31,7 +37,7 @@ const AppRouterProvider = () => (
         />
         <Route
           path="*"
-          element={<div>Not found</div>}
+          element={<NotFoundPage />}
         />
       </Route>
     </Routes>
