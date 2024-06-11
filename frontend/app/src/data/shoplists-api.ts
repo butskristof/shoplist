@@ -15,6 +15,15 @@ export const useShoplistsApiGetList = (id: string) =>
     // retry: false, // TODO conditional for 404?
   });
 
+export const useShoplistApiCreateItem = (queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: ShoplistsApi.createItem,
+    onSuccess: (response: ShoplistItem) =>
+      queryClient.invalidateQueries({
+        queryKey: ['lists', response.listId],
+      }),
+  });
+
 export const useShoplistsApiUpdateItem = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: ShoplistsApi.updateItem,

@@ -16,7 +16,7 @@ const Shoplist: FC<Props> = ({ list }) => {
   const sortedItems = list.items.toSorted((a) => (a.ticked ? 1 : -1));
   const untickedCount = list.items.filter((i) => !i.ticked).length;
 
-  const [showCreate, setShowCreate] = useState(false);
+  const [showCreate, setShowCreate] = useState(true);
 
   return (
     <div>
