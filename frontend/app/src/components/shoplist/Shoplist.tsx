@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import ShoplistItem from '../shoplist-item/ShoplistItem.tsx';
+import ShoplistItem from '@/components/shoplist-item/ShoplistItem.tsx';
 
 interface Props {
   name: string;
@@ -9,7 +9,7 @@ interface Props {
 
 const Shoplist: FC<Props> = ({ name, items }) => (
   <div>
-    <h2>{name}</h2>
+    <h1>{name}</h1>
     <ul>
       {items.map((i) => (
         <li key={i.id}>

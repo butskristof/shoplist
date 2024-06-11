@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const updateItem = (item) =>
-  fetch(`http://localhost:3000/items/${item.id}`, {
+  fetch(`/api/items/${item.id}`, {
     method: 'PUT',
     body: JSON.stringify(item),
   }).then((r) => r.json());
@@ -15,7 +15,6 @@ interface Props {
 
 const ShoplistItem: FC<Props> = ({ item }) => {
   const queryClient = useQueryClient();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const mutation = useMutation({
     mutationFn: updateItem,
     onSuccess: () => {
