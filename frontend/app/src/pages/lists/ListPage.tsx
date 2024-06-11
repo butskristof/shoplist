@@ -1,22 +1,37 @@
 import { Link, useParams } from 'react-router-dom';
-import Shoplist from '@/components/shoplist/Shoplist.tsx';
+import { Button } from '@mantine/core';
+import { IoHome } from 'react-icons/io5';
+import { useShoplistsApiGetList } from '@/data/shoplists-api.ts';
+import NotFound from '@/components/common/NotFound.tsx';
+import EntityLoader from '@/components/common/EntityLoader.tsx';
+import Shoplist from '@/components/lists/detail/Shoplist.tsx';
 
 const ListPage = () => {
-  const { id } = useParams();
-  const { data: list = null } = useShoplistsApiList(id);
+  // we assume id will be available, otherwise the router
+  // won't let the component be rendered
+  const { id } = useParams() as { id: string };
+  const query = useShoplistsApiGetList(id);
 
-  return (
-    <div>
-      <div>
-        <Link to="/lists">Back to overview</Link>
-      </div>
-      {list && (
-        <Shoplist
-          name={list.name}
-          items={list.items}
-        />
-      )}
-    </div>
-  );
+  if (query.isPending) return <EntityLoader entity="list" />;
+
+  if (query.isError && query.error.response.status === 404)
+    return (
+      <NotFound
+        entity="list"
+        actions={
+          <>
+            <Button
+              component={Link}
+              to="/lists"
+              leftSection={<IoHome />}
+            >
+              Back to list overview
+            </Button>
+          </>
+        }
+      />
+    );
+
+  return <Shoplist list={query.data} />;
 };
 export default ListPage;

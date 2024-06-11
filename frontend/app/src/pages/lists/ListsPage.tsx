@@ -7,6 +7,7 @@ import { useShoplistsApiGetLists } from '@/data/shoplists-api.ts';
 
 const ListsPage = () => {
   const query = useShoplistsApiGetLists();
+
   return (
     <div>
       <LeftRightHeader
