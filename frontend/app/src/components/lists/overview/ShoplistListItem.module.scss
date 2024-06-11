@@ -1,0 +1,9 @@
+.unticked {
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-gray-6));
+  font-weight: initial;
+}
+
+.list-item-label {
+  flex-grow: 1;
+  @include flex-row-justify-between;
+}

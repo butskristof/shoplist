@@ -1,0 +1,4 @@
+.lists {
+  @include flex-column;
+  gap: var(--mantine-spacing-md)
+}

@@ -38,7 +38,11 @@
   text-decoration: none;
 }
 
-@mixin unstyled-ul {}
+@mixin unstyled-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
 @mixin info-page {
   padding-block: 4rem;
