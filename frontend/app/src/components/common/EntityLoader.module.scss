@@ -1,0 +1,10 @@
+.loader {
+  padding-block: 4rem;
+  height: 100%;
+  text-align: center;
+
+  @include flex-column;
+  gap: var(--default-padding);
+  align-items: center;
+  justify-content: center;
+}

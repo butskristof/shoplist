@@ -17,12 +17,32 @@
   justify-content: space-between;
 }
 
+@mixin flex-row-justify-between-wrapping {
+  @include flex-row-justify-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--default-padding);
+}
+
+@mixin flex-row-actions {
+  @include flex-row;
+  gap: calc(var(--default-padding) / 2);
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
 @mixin unstyled-link {
   color: var(--mantine-color-text);
   text-decoration: none;
 }
 
-@mixin unstyled-ul {}
+@mixin unstyled-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
 @mixin info-page {
   padding-block: 4rem;

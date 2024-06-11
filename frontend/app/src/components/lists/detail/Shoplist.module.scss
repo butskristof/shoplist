@@ -1,0 +1,8 @@
+.name {
+  margin-bottom: var(--mantine-spacing-md)
+}
+
+.list {
+  @include flex-column;
+  gap: var(--mantine-spacing-md)
+}
