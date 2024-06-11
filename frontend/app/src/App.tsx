@@ -9,12 +9,12 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <MantineProvider>
+    <MantineProvider defaultColorScheme="auto">
       <QueryClientProvider client={queryClient}>
         <AppLayout>
           <AppRoutes />
         </AppLayout>
-        <ReactQueryDevtools />
+        <ReactQueryDevtools buttonPosition="bottom-left" />
       </QueryClientProvider>
     </MantineProvider>
   );
