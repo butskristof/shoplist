@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = '/api';
 const fetchBase = (url: string) => fetch(BASE_URL + url).then((r) => r.json());
 
 export const SHOPLISTS_API_QUERY_KEYS = {
