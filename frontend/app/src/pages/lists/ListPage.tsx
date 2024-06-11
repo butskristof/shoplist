@@ -1,6 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
 import Shoplist from '@/components/shoplist/Shoplist.tsx';
-import { useShoplistsApiList } from '@/hooks/api/shoplists-api.ts';
 
 const ListPage = () => {
   const { id } = useParams();
