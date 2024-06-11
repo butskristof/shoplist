@@ -1,0 +1,17 @@
+:root {
+  --default-padding: var(--mantine-spacing-md);
+  @media (min-width: $mantine-breakpoint-sm) {
+    --default-padding: var(--mantine-spacing-xl);
+  }
+
+  //color: light-dark(var(--mantine-color-gray-8), var(--mantine-color-white))
+  --mantine-color-text: var(--mantine-color-white);
+}
+
+html, body {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}

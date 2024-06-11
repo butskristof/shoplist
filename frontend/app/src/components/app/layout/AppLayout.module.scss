@@ -1,0 +1,23 @@
+.layout {
+  min-height: 100vh;
+  @include flex-column;
+}
+
+.header {
+  flex-shrink: 0;
+}
+
+.body {
+  flex-grow: 1;
+  @include flex-column;
+}
+
+.page {
+  flex-grow: 1;
+  padding-inline: var(--default-padding);
+}
+
+.footer {
+  flex-grow: 0;
+  flex-shrink: 0;
+}

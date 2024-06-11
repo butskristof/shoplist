@@ -1,23 +1,6 @@
 import '@mantine/core/styles.css';
-import { MantineProvider } from '@mantine/core';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import AppLayout from './components/app/AppLayout.tsx';
-import AppRoutes from './components/app/AppRoutes.tsx';
+import AppProviders from '@/components/app/providers/AppProviders.tsx';
 
-const queryClient = new QueryClient();
-
-function App() {
-  return (
-    <MantineProvider>
-      <QueryClientProvider client={queryClient}>
-        <AppLayout>
-          <AppRoutes />
-        </AppLayout>
-        <ReactQueryDevtools />
-      </QueryClientProvider>
-    </MantineProvider>
-  );
-}
+const App = () => <AppProviders />;
 
 export default App;

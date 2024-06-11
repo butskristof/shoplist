@@ -1,0 +1,7 @@
+.page-not-found {
+  @include info-page;
+
+  .actions {
+    @include info-page-actions;
+  }
+}
