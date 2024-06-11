@@ -1,7 +1,7 @@
 .footer {
   @include flex-row;
   justify-content: flex-end;
-  padding: var(--mantine-spacing-md);
+  padding: var(--default-padding);
 
   .actions {
     @include flex-row;

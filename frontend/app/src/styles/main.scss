@@ -1,0 +1,6 @@
+:root {
+  --default-padding: var(--mantine-spacing-md);
+  @media (min-width: $mantine-breakpoint-sm) {
+    --default-padding: var(--mantine-spacing-xl);
+  }
+}
