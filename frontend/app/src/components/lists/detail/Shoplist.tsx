@@ -7,18 +7,22 @@ interface Props {
   list: ShoplistWithItems;
 }
 
-const Shoplist: FC<Props> = ({ list }) => (
-  <div>
-    <h1 className={classes.name}>{list.name}</h1>
-    <div className={classes.list}>
-      {list.items.map((i) => (
-        <ShoplistItem
-          item={i}
-          key={i.id}
-        />
-      ))}
-    </div>
-  </div>
-);
+const Shoplist: FC<Props> = ({ list }) => {
+  // sort ticked items to bottom
+  const sortedItems = list.items.toSorted((a) => (a.ticked ? 1 : -1));
 
+  return (
+    <div>
+      <h1 className={classes.name}>{list.name}</h1>
+      <div className={classes.list}>
+        {sortedItems.map((i) => (
+          <ShoplistItem
+            item={i}
+            key={i.id}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 export default Shoplist;
