@@ -16,3 +16,10 @@
   @include flex-row;
   justify-content: space-between;
 }
+
+@mixin unstyled-link {
+  color: var(--mantine-color-text);
+  text-decoration: none;
+}
+
+@mixin unstyled-ul {}

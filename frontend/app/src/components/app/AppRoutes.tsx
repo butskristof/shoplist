@@ -2,32 +2,38 @@ import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-d
 import AboutPage from '@/pages/AboutPage.tsx';
 import ListsPage from '@/pages/lists/ListsPage.tsx';
 import ListPage from '@/pages/lists/ListPage.tsx';
+import AppLayout from '@/components/app/AppLayout.tsx';
 
 const AppRoutes = () => (
   <Router>
     <Routes>
       <Route
         path="/"
-        element={<Navigate to="/lists" />}
-      />
-      <Route path="/lists">
+        element={<AppLayout />}
+      >
         <Route
           index
-          element={<ListsPage />}
+          element={<Navigate to="/lists" />}
+        />
+        <Route path="/lists">
+          <Route
+            index
+            element={<ListsPage />}
+          />
+          <Route
+            path=":id"
+            element={<ListPage />}
+          />
+        </Route>
+        <Route
+          path="/about"
+          element={<AboutPage />}
         />
         <Route
-          path=":id"
-          element={<ListPage />}
+          path="*"
+          element={<div>Not found</div>}
         />
       </Route>
-      <Route
-        path="/about"
-        element={<AboutPage />}
-      />
-      <Route
-        path="*"
-        element={<div>Not found</div>}
-      />
     </Routes>
   </Router>
 );

@@ -3,4 +3,7 @@
   @media (min-width: $mantine-breakpoint-sm) {
     --default-padding: var(--mantine-spacing-xl);
   }
+
+  //color: light-dark(var(--mantine-color-gray-8), var(--mantine-color-white))
+  --mantine-color-text: var(--mantine-color-white);
 }

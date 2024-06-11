@@ -1,13 +1,15 @@
-import { FC } from 'react';
-import { PropsWithChildren } from '@/types/PropsWithChildren.ts';
+import { Outlet } from 'react-router-dom';
 import classes from './AppLayout.module.scss';
 import AppFooter from '@/components/app/AppFooter.tsx';
+import AppHeader from '@/components/app/AppHeader.tsx';
 
-const AppLayout: FC<PropsWithChildren> = ({ children }) => (
+const AppLayout = () => (
   <div className={classes.layout}>
-    <div className={classes.header}>header</div>
+    <AppHeader className={classes.header} />
     <div className={classes.body}>
-      <div className={classes.page}>{children}</div>
+      <div className={classes.page}>
+        <Outlet />
+      </div>
       <AppFooter className={classes.footer} />
     </div>
   </div>

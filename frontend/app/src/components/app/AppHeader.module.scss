@@ -1,0 +1,25 @@
+header {
+  min-height: 80px;
+  background-color: var(--mantine-color-body);
+  margin-bottom: var(--default-padding);
+
+  @include flex-row-justify-between;
+  align-items: center;
+  padding-inline: var(--default-padding);
+
+  position: sticky;
+  top: 0;
+
+  box-shadow: var(--mantine-shadow-sm);
+}
+
+.brand {
+  font-size: 150%;
+  font-weight: 700;
+
+  @include flex-row;
+  align-items: center;
+  gap: 0.5rem;
+
+  @include unstyled-link;
+}
