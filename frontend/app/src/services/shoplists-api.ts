@@ -9,6 +9,12 @@ export const ShoplistsApi = {
   getList: (id: string): Promise<ShoplistWithItems> =>
     api.get<ShoplistWithItems>(`/lists/${id}?_embed=items`).then((r) => r.data),
 
+  createList: (payload: Shoplist): Promise<Shoplist> =>
+    api.post<Shoplist>('/lists', payload).then((r) => r.data),
+
+  updateList: (payload: Shoplist): Promise<Shoplist> =>
+    api.put<Shoplist>(`/lists/${payload.id}`, payload).then((r) => r.data),
+
   deleteList: (id: string): Promise<null> => api.delete<null>(`/lists/${id}`).then((r) => r.data),
 
   createItem: (payload: ShoplistItem): Promise<ShoplistItem> =>
