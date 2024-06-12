@@ -1,4 +1,3 @@
-.list {
-  @include flex-column;
-  gap: var(--mantine-spacing-md)
+.headerActions {
+  @include flex-row-actions;
 }

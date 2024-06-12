@@ -3,7 +3,7 @@ import { Checkbox, MantineProvider } from '@mantine/core';
 import { useQueryClient } from '@tanstack/react-query';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { ShoplistItem as ShoplistItemModel } from '@/types/shoplists-api.types.ts';
-import { useShoplistsApiUpdateItem } from '@/data/shoplists-api.ts';
+import { useShoplistsApiUpsertItem } from '@/data/shoplists-api.ts';
 import AppCard from '@/components/common/AppCard.tsx';
 import ShoplistItemAction from '@/components/lists/detail/ShoplistItemAction.tsx';
 import classes from './ShoplistItem.module.scss';
@@ -14,7 +14,7 @@ interface Props {
 
 const ShoplistItem: FC<Props> = ({ item }) => {
   const queryClient = useQueryClient();
-  const mutation = useShoplistsApiUpdateItem(queryClient);
+  const mutation = useShoplistsApiUpsertItem(queryClient);
   // TODO optimistic update?
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>

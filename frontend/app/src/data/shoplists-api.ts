@@ -14,18 +14,10 @@ export const useShoplistsApiGetList = (id: string) =>
     queryFn: () => ShoplistsApi.getList(id),
   });
 
-export const useShoplistApiCreateItem = (queryClient: QueryClient) =>
+export const useShoplistsApiUpsertItem = (queryClient: QueryClient) =>
   useMutation({
-    mutationFn: ShoplistsApi.createItem,
-    onSuccess: (response: ShoplistItem) =>
-      queryClient.invalidateQueries({
-        queryKey: ['lists', response.listId],
-      }),
-  });
-
-export const useShoplistsApiUpdateItem = (queryClient: QueryClient) =>
-  useMutation({
-    mutationFn: ShoplistsApi.updateItem,
+    mutationFn: (payload: ShoplistItem, isEdit: boolean) =>
+      isEdit ? ShoplistsApi.updateItem(payload) : ShoplistsApi.createItem(payload),
     onSuccess: (response: ShoplistItem) =>
       queryClient.invalidateQueries({
         queryKey: ['lists', response.listId],

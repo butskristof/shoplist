@@ -6,7 +6,7 @@ import NotFound from '@/components/common/NotFound.tsx';
 import classes from './ApiError.module.scss';
 
 interface Props {
-  error: unknown;
+  error: Error;
   message?: string;
   entity?: string;
   actions?: ReactNode;
