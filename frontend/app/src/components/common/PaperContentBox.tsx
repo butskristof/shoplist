@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { ElementProps, Paper, PaperProps } from '@mantine/core';
 
+// TODO make polymorphic
 interface Props extends PaperProps, ElementProps<'div', keyof PaperProps> {}
 
 const PaperContentBox: FC<Props> = (props) => (

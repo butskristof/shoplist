@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { Button } from '@mantine/core';
-import { IoAdd } from 'react-icons/io5';
 import { useDisclosure } from '@mantine/hooks';
+import { IconPlus } from '@tabler/icons-react';
 import { ShoplistWithItems } from '@/types/shoplists-api.types.ts';
 import ShoplistItem from '@/components/lists/detail/ShoplistItem.tsx';
 import classes from './Shoplist.module.scss';
 import LeftRightHeader from '@/components/common/LeftRightHeader.tsx';
 import CreateShoplistItem from '@/components/lists/detail/CreateShoplistItem.tsx';
+import IconButton from '@/components/common/IconButton.tsx';
 
 interface Props {
   list: ShoplistWithItems;
@@ -20,7 +20,7 @@ const Shoplist: FC<Props> = ({ list }) => {
   const [showCreate, { open: openCreate, close: closeCreate }] = useDisclosure(false);
 
   return (
-    <div className={classes.shoplist}>
+    <>
       <LeftRightHeader
         left={
           <div>
@@ -32,21 +32,16 @@ const Shoplist: FC<Props> = ({ list }) => {
         }
         right={
           <div>
-            <Button
-              leftSection={<IoAdd size={20} />}
+            <IconButton
+              icon={<IconPlus />}
               onClick={openCreate}
             >
-              Add item
-            </Button>
+              Add list item
+            </IconButton>
           </div>
         }
       />
-      {showCreate && (
-        <CreateShoplistItem
-          listId={list.id}
-          onClose={closeCreate}
-        />
-      )}
+
       <div className={classes.list}>
         {sortedItems.map((i) => (
           <ShoplistItem
@@ -55,7 +50,14 @@ const Shoplist: FC<Props> = ({ list }) => {
           />
         ))}
       </div>
-    </div>
+
+      {showCreate && (
+        <CreateShoplistItem
+          listId={list.id}
+          onClose={closeCreate}
+        />
+      )}
+    </>
   );
 };
 

@@ -1,9 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useShoplistsApiGetList } from '@/data/shoplists-api.ts';
-import EntityLoader from '@/components/common/EntityLoader.tsx';
 import Shoplist from '@/components/lists/detail/Shoplist.tsx';
-import ApiError from '@/components/common/ApiError.tsx';
 import DetailPageHeader from '@/components/common/DetailPageHeader.tsx';
+import EntityQuery from '@/components/common/EntityQuery.tsx';
 
 const ListPage = () => {
   // we assume id will be available, otherwise the router
@@ -15,17 +14,13 @@ const ListPage = () => {
     <>
       <DetailPageHeader backTo="/lists" />
 
-      {query.isPending && <EntityLoader entity="list" />}
-
-      {query.isError && (
-        <ApiError
-          error={query.error}
-          entity="list"
-          page
-        />
-      )}
-
-      {query.isSuccess && <Shoplist list={query.data} />}
+      <EntityQuery
+        query={query}
+        entity="list"
+      >
+        {/* query.data will be defined if the children are rendered (only when isSuccess) */}
+        <Shoplist list={query.data!} />
+      </EntityQuery>
     </>
   );
 };
