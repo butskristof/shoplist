@@ -9,6 +9,7 @@ import ShoplistItem from '@/components/lists/detail/ShoplistItem.tsx';
 import LeftRightHeader from '@/components/common/LeftRightHeader.tsx';
 import IconButton from '@/components/common/IconButton.tsx';
 import EditShoplistItem from '@/components/lists/detail/EditShoplistItem.tsx';
+import DeleteShoplistItem from '@/components/lists/detail/DeleteShoplistItem.tsx';
 
 interface Props {
   list: ShoplistWithItems;
@@ -34,6 +35,9 @@ const ShoplistItems: FC<Props> = ({ list }) => {
   //#endregion
 
   //#region delete item
+  const [itemForDelete, setItemForDelete] = useState<ShoplistItemType>(undefined);
+  const openDelete = (id: string) => setItemForDelete(list.items.find((i) => i.id === id));
+  const closeDelete = () => setItemForDelete(undefined);
   //#endregion
 
   return (
@@ -56,6 +60,7 @@ const ShoplistItems: FC<Props> = ({ list }) => {
             item={i}
             key={i.id}
             onEdit={() => openEdit(i.id)}
+            onDelete={() => openDelete(i.id)}
           />
         ))}
       </div>
@@ -65,6 +70,13 @@ const ShoplistItems: FC<Props> = ({ list }) => {
           listId={list.id}
           onClose={closeEdit}
           shoplistItem={itemForEdit}
+        />
+      )}
+
+      {itemForDelete && (
+        <DeleteShoplistItem
+          onClose={closeDelete}
+          item={itemForDelete}
         />
       )}
     </>

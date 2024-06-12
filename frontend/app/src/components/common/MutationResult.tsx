@@ -4,6 +4,8 @@ import { IconCheck } from '@tabler/icons-react';
 import ApiError from '@/components/common/ApiError.tsx';
 
 interface Props {
+  successMessage: string;
+  errorMessage: string;
   mutation: {
     isSuccess: boolean;
     isError: boolean;
@@ -11,7 +13,7 @@ interface Props {
   };
 }
 
-const MutationResult: FC<Props> = ({ mutation }) => (
+const MutationResult: FC<Props> = ({ successMessage, errorMessage, mutation }) => (
   <div className="result">
     {mutation.isSuccess && (
       <Alert
@@ -26,13 +28,13 @@ const MutationResult: FC<Props> = ({ mutation }) => (
         color="green"
         icon={<IconCheck />}
       >
-        List item saved
+        {successMessage}
       </Alert>
     )}
     {mutation.isError && (
       <ApiError
         error={mutation.error}
-        message="Saving the list item failed, please refer to the error information below for more details."
+        message={`${errorMessage}, please refer to the error information below for more details.`}
       />
     )}
   </div>

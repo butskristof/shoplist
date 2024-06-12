@@ -23,3 +23,12 @@ export const useShoplistsApiUpsertItem = (queryClient: QueryClient, isEdit: bool
         queryKey: ['lists', response.listId],
       }),
   });
+
+export const useShoplistsApiDeleteItem = (queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: (id: string) => ShoplistsApi.deleteItem(id),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ['lists'], // TODO review
+      }),
+  });

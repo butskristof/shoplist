@@ -14,4 +14,6 @@ export const ShoplistsApi = {
 
   updateItem: (payload: ShoplistItem): Promise<ShoplistItem> =>
     api.put<ShoplistItem>(`items/${payload.id}`, payload).then((r) => r.data),
+
+  deleteItem: (id: string): Promise<null> => api.delete<null>(`/items/${id}`).then((r) => r.data),
 };

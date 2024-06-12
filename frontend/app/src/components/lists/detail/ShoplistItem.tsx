@@ -10,9 +10,10 @@ import classes from './ShoplistItem.module.scss';
 interface Props {
   item: ShoplistItemModel;
   onEdit: () => void;
+  onDelete: () => void;
 }
 
-const ShoplistItem: FC<Props> = ({ item, onEdit }) => {
+const ShoplistItem: FC<Props> = ({ item, onEdit, onDelete }) => {
   const queryClient = useQueryClient();
   const mutation = useShoplistsApiUpsertItem(queryClient);
   // TODO optimistic update?
@@ -37,7 +38,7 @@ const ShoplistItem: FC<Props> = ({ item, onEdit }) => {
             <ActionIcon onClick={onEdit}>
               <IconEdit size={16} />
             </ActionIcon>
-            <ActionIcon onClick={onEdit}>
+            <ActionIcon onClick={onDelete}>
               <IconTrash size={16} />
             </ActionIcon>
           </div>

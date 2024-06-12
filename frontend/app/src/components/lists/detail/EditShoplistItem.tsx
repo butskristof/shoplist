@@ -1,4 +1,3 @@
-import { Modal } from '@mantine/core';
 import { FC } from 'react';
 import * as yup from 'yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -10,6 +9,7 @@ import { ShoplistItem } from '@/types/shoplists-api.types.ts';
 import { useShoplistsApiUpsertItem } from '@/data/shoplists-api.ts';
 import IconButton from '@/components/common/IconButton.tsx';
 import MutationResult from '@/components/common/MutationResult.tsx';
+import EditModal from '@/components/common/modals/EditModal.tsx';
 
 const schema = yup.object({
   name: yup.string().trim().required().label('Name'),
@@ -70,8 +70,7 @@ const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
   };
 
   return (
-    <Modal
-      opened
+    <EditModal
       onClose={tryClose}
       title={`${isEdit ? 'Edit' : 'Add new'} list item`}
     >
@@ -91,7 +90,11 @@ const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
         </div>
 
         <div className="footer">
-          <MutationResult mutation={mutation} />
+          <MutationResult
+            mutation={mutation}
+            successMessage="List item saved"
+            errorMessage="Saving the list item failed"
+          />
           <div className="actions">
             <IconButton
               icon={<IconDeviceFloppy />}
@@ -104,7 +107,7 @@ const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
           </div>
         </div>
       </form>
-    </Modal>
+    </EditModal>
   );
 };
 
