@@ -17,7 +17,14 @@ const Shoplist: FC<Props> = ({ list }) => {
   const sortedItems = list.items.toSorted((a) => (a.ticked ? 1 : -1));
   const untickedCount = list.items.filter((i) => !i.ticked).length;
 
+  //#region create/edit
+
   const [showCreate, { open: openCreate, close: closeCreate }] = useDisclosure(false);
+
+  //#endregion
+
+  //#region delete
+  //#endregion
 
   return (
     <>

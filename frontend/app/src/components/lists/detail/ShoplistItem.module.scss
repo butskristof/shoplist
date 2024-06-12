@@ -1,0 +1,8 @@
+.item {
+  @include flex-row-justify-between;
+  align-items: center;
+}
+
+.actions {
+  @include flex-row-actions;
+}
