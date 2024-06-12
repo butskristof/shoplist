@@ -1,18 +1,18 @@
 import { ChangeEvent, FC } from 'react';
-import { Checkbox, MantineProvider } from '@mantine/core';
+import { ActionIcon, Checkbox, MantineProvider } from '@mantine/core';
 import { useQueryClient } from '@tanstack/react-query';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { ShoplistItem as ShoplistItemModel } from '@/types/shoplists-api.types.ts';
 import { useShoplistsApiUpsertItem } from '@/data/shoplists-api.ts';
 import AppCard from '@/components/common/AppCard.tsx';
-import ShoplistItemAction from '@/components/lists/detail/ShoplistItemAction.tsx';
 import classes from './ShoplistItem.module.scss';
 
 interface Props {
   item: ShoplistItemModel;
+  onEdit: () => void;
 }
 
-const ShoplistItem: FC<Props> = ({ item }) => {
+const ShoplistItem: FC<Props> = ({ item, onEdit }) => {
   const queryClient = useQueryClient();
   const mutation = useShoplistsApiUpsertItem(queryClient);
   // TODO optimistic update?
@@ -34,8 +34,12 @@ const ShoplistItem: FC<Props> = ({ item }) => {
             onChange={handleChange}
           />
           <div className={classes.actions}>
-            <ShoplistItemAction icon={<IconEdit />} />
-            <ShoplistItemAction icon={<IconTrash />} />
+            <ActionIcon onClick={onEdit}>
+              <IconEdit size={16} />
+            </ActionIcon>
+            <ActionIcon onClick={onEdit}>
+              <IconTrash size={16} />
+            </ActionIcon>
           </div>
         </div>
       </MantineProvider>

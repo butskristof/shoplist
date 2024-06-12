@@ -28,7 +28,7 @@ const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
   //#region mutation
 
   const queryClient = useQueryClient();
-  const mutation = useShoplistsApiUpsertItem(queryClient);
+  const mutation = useShoplistsApiUpsertItem(queryClient, isEdit);
 
   //#endregion
 
@@ -53,7 +53,7 @@ const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
       ticked: false,
       listId,
     };
-    return mutation.mutate(payload, isEdit);
+    return mutation.mutate(payload);
   };
 
   //#endregion
