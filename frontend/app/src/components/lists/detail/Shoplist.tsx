@@ -6,6 +6,7 @@ import LeftRightHeader from '@/components/common/LeftRightHeader.tsx';
 import IconButton from '@/components/common/IconButton.tsx';
 import ShoplistItems from '@/components/lists/detail/ShoplistItems.tsx';
 import DeleteShoplist from '@/components/lists/detail/DeleteShoplist.tsx';
+import EditShoplist from '@/components/lists/common/EditShoplist.tsx';
 
 interface Props {
   list: ShoplistWithItems;
@@ -14,6 +15,12 @@ interface Props {
 const Shoplist: FC<Props> = ({ list }) => {
   const navigate = useNavigate();
   const untickedCount = list.items.filter((i) => !i.ticked).length;
+
+  //#region edit
+
+  const [showEdit, setShowEdit] = useState(false);
+
+  //#endregion
 
   //#region delete
 
@@ -38,7 +45,12 @@ const Shoplist: FC<Props> = ({ list }) => {
         }
         right={
           <>
-            <IconButton icon={<IconEdit />}>Edit</IconButton>
+            <IconButton
+              icon={<IconEdit />}
+              onClick={() => setShowEdit(true)}
+            >
+              Edit
+            </IconButton>
             <IconButton
               icon={<IconTrash />}
               color="red"
@@ -51,6 +63,13 @@ const Shoplist: FC<Props> = ({ list }) => {
       />
 
       <ShoplistItems list={list} />
+
+      {showEdit && (
+        <EditShoplist
+          onClose={() => setShowEdit(false)}
+          shoplist={list}
+        />
+      )}
 
       {showDelete && (
         <DeleteShoplist
