@@ -41,7 +41,7 @@ const Shoplist: FC<Props> = ({ list }) => {
           </div>
         }
       />
-      {showCreate && <CreateShoplistItem />}
+      {showCreate && <CreateShoplistItem listId={list.id} />}
       <div className={classes.list}>
         {sortedItems.map((i) => (
           <ShoplistItem
