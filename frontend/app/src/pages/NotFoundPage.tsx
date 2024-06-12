@@ -1,21 +1,19 @@
-import { Button } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import { IoHome } from 'react-icons/io5';
+import { IconHome } from '@tabler/icons-react';
 import NotFound from '@/components/common/NotFound.tsx';
+import IconButton from '@/components/common/IconButton.tsx';
 
 const NotFoundPage = () => (
   <NotFound
     entity="page"
     actions={
-      <>
-        <Button
-          component={Link}
-          to="/"
-          leftSection={<IoHome />}
-        >
-          Go to dashboard
-        </Button>
-      </>
+      <IconButton
+        component={Link}
+        to="/"
+        icon={<IconHome />}
+      >
+        Go to dashboard
+      </IconButton>
     }
   />
 );

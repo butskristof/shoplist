@@ -59,5 +59,6 @@ module.exports = {
     ],
     'import/newline-after-import': ['error', { count: 1 }],
     'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-misused-promises': 'off'
   },
 };
