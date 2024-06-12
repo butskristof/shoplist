@@ -12,7 +12,6 @@ export const useShoplistsApiGetList = (id: string) =>
   useQuery({
     queryKey: ['lists', id],
     queryFn: () => ShoplistsApi.getList(id),
-    // retry: false, // TODO conditional for 404?
   });
 
 export const useShoplistApiCreateItem = (queryClient: QueryClient) =>
