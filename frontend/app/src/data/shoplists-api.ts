@@ -1,6 +1,6 @@
 import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { ShoplistsApi } from '@/services/shoplists-api.ts';
-import { ShoplistItem } from '@/types/shoplists-api.types.ts';
+import { Shoplist, ShoplistItem } from '@/types/shoplists-api.types.ts';
 
 export const useShoplistsApiGetLists = () =>
   useQuery({
@@ -12,6 +12,16 @@ export const useShoplistsApiGetList = (id: string) =>
   useQuery({
     queryKey: ['lists', id],
     queryFn: () => ShoplistsApi.getList(id),
+  });
+
+export const useShoplistsApiUpsertList = (queryClient: QueryClient, isEdit: boolean) =>
+  useMutation({
+    mutationFn: (payload: Shoplist) =>
+      isEdit ? ShoplistsApi.updateList(payload) : ShoplistsApi.createList(payload),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ['lists'], // TODO review
+      }),
   });
 
 export const useShoplistsApiDeleteList = (queryClient: QueryClient) =>

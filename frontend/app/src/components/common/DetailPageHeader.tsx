@@ -1,22 +1,22 @@
 import { Link, To } from 'react-router-dom';
-import { Button } from '@mantine/core';
-import { IoArrowBack } from 'react-icons/io5';
 import { FC } from 'react';
+import { IconArrowLeft } from '@tabler/icons-react';
 import classes from './DetailPageHeader.module.scss';
+import IconButton from '@/components/common/IconButton.tsx';
 
 interface Props {
   backTo: To;
 }
 const DetailPageHeader: FC<Props> = ({ backTo }) => (
   <div className={classes.header}>
-    <Button
+    <IconButton
       component={Link}
       to={backTo}
-      leftSection={<IoArrowBack />}
+      icon={<IconArrowLeft />}
       variant="light"
     >
       Back to overview
-    </Button>
+    </IconButton>
   </div>
 );
 
