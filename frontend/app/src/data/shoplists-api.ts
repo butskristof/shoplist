@@ -16,10 +16,19 @@ export const useShoplistsApiGetList = (id: string) =>
 
 export const useShoplistsApiUpsertItem = (queryClient: QueryClient, isEdit: boolean) =>
   useMutation({
-    mutationFn: (payload) =>
+    mutationFn: (payload: ShoplistItem) =>
       isEdit ? ShoplistsApi.updateItem(payload) : ShoplistsApi.createItem(payload),
     onSuccess: (response: ShoplistItem) =>
       queryClient.invalidateQueries({
         queryKey: ['lists', response.listId],
+      }),
+  });
+
+export const useShoplistsApiDeleteItem = (queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: (id: string) => ShoplistsApi.deleteItem(id),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ['lists'], // TODO review
       }),
   });

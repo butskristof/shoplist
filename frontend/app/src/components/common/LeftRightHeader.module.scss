@@ -2,3 +2,11 @@
   @include flex-row-justify-between-wrapping;
   margin-bottom: var(--default-padding);
 }
+
+.left {
+  margin-right: var(--mantine-spacing-md);
+}
+
+.right {
+  @include flex-row-actions;
+}
