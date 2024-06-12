@@ -29,15 +29,17 @@ const ShoplistItems: FC<Props> = ({ list }) => {
   };
   const closeEdit = () => {
     setShowEdit(false);
-    setItemForEdit(null);
+    setItemForEdit(undefined);
   };
 
   //#endregion
 
   //#region delete item
-  const [itemForDelete, setItemForDelete] = useState<ShoplistItemType>(undefined);
+
+  const [itemForDelete, setItemForDelete] = useState<ShoplistItemType | undefined>(undefined);
   const openDelete = (id: string) => setItemForDelete(list.items.find((i) => i.id === id));
   const closeDelete = () => setItemForDelete(undefined);
+
   //#endregion
 
   return (
@@ -82,4 +84,5 @@ const ShoplistItems: FC<Props> = ({ list }) => {
     </>
   );
 };
+
 export default ShoplistItems;

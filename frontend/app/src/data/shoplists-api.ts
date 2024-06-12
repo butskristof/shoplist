@@ -14,6 +14,15 @@ export const useShoplistsApiGetList = (id: string) =>
     queryFn: () => ShoplistsApi.getList(id),
   });
 
+export const useShoplistsApiDeleteList = (queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: (id: string) => ShoplistsApi.deleteList(id),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ['lists'], // TODO review
+      }),
+  });
+
 export const useShoplistsApiUpsertItem = (queryClient: QueryClient, isEdit: boolean) =>
   useMutation({
     mutationFn: (payload: ShoplistItem) =>
