@@ -9,10 +9,10 @@ import classes from './DeleteModal.module.scss';
 export interface Props {
   entity: string;
   mutation: {
-    isLoading: boolean;
+    isPending: boolean;
     isSuccess: boolean;
     isError: boolean;
-    error: Error;
+    error: Error | null;
   };
   confirmText: ReactNode;
   onDelete: () => void;
@@ -40,7 +40,7 @@ const DeleteModal: FC<Props> = ({ entity, onClose, onDelete, confirmText, mutati
           <IconButton
             icon={<IconX />}
             variant="light"
-            disabled={mutation.isLoading}
+            disabled={mutation.isPending}
             onClick={onClose}
           >
             No, keep {entity.toLowerCase()}
@@ -48,10 +48,10 @@ const DeleteModal: FC<Props> = ({ entity, onClose, onDelete, confirmText, mutati
           <IconButton
             color="red"
             icon={<IconTrash />}
-            loading={mutation.isLoading}
+            loading={mutation.isPending}
             onClick={onDelete}
           >
-            {mutation.isLoading ? 'Deleting...' : 'Yes, delete'}
+            {mutation.isPending ? 'Deleting...' : 'Yes, delete'}
           </IconButton>
         </div>
       </>

@@ -16,7 +16,7 @@ export const useShoplistsApiGetList = (id: string) =>
 
 export const useShoplistsApiUpsertItem = (queryClient: QueryClient, isEdit: boolean) =>
   useMutation({
-    mutationFn: (payload) =>
+    mutationFn: (payload: ShoplistItem) =>
       isEdit ? ShoplistsApi.updateItem(payload) : ShoplistsApi.createItem(payload),
     onSuccess: (response: ShoplistItem) =>
       queryClient.invalidateQueries({

@@ -9,7 +9,7 @@ interface Props {
   mutation: {
     isSuccess: boolean;
     isError: boolean;
-    error: Error;
+    error: Error | null;
   };
 }
 
