@@ -7,3 +7,7 @@
   flex-grow: 1;
   @include flex-row-justify-between;
 }
+
+.list-item {
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-gray-8));
+}

@@ -13,12 +13,11 @@ interface Props extends ButtonProps {
 
 const IconButton = createPolymorphicComponent<'button', Props>(
   forwardRef<HTMLButtonElement, Props>(({ icon, ...props }, ref) => {
-    // either render a new component based on that was passed in
-    const styledIcon = cloneElement(icon, { size: px('1rem') });
+    const clonedIcon = cloneElement(icon, { size: px('1rem') });
 
     return (
       <Button
-        leftSection={styledIcon}
+        leftSection={clonedIcon}
         {...props}
         ref={ref}
       />

@@ -13,7 +13,7 @@ const ListPage = () => {
 
   return (
     <>
-      <DetailPageHeader to="/lists" />
+      <DetailPageHeader backTo="/lists" />
 
       {query.isPending && <EntityLoader entity="list" />}
 
@@ -29,4 +29,5 @@ const ListPage = () => {
     </>
   );
 };
+
 export default ListPage;

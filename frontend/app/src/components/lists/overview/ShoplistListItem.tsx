@@ -9,22 +9,22 @@ interface Props {
 }
 
 const ShoplistListItem: FC<Props> = ({ list }) => {
-  const unticked = Math.round(Math.random() * 10);
+  const unticked = Math.round(Math.random() * 10); // TODO replace w/ API data
+
   return (
-    <>
-      <Button
-        component={Link}
-        to={`/lists/${list.id}`}
-        variant="white"
-        size="md"
-        classNames={{
-          label: classes['list-item-label'],
-        }}
-      >
-        <div className="name">{list.name}</div>
-        <div className={classes.unticked}>{unticked} items unticked</div>
-      </Button>
-    </>
+    <Button
+      component={Link}
+      to={`/lists/${list.id}`}
+      variant="light"
+      size="md"
+      classNames={{
+        root: classes['list-item'],
+        label: classes['list-item-label'],
+      }}
+    >
+      <div className="name">{list.name}</div>
+      <div className={classes.unticked}>{unticked} unticked items</div>
+    </Button>
   );
 };
 

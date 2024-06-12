@@ -22,10 +22,9 @@ const Shoplist: FC<Props> = ({ list }) => {
   return (
     <div className={classes.shoplist}>
       <LeftRightHeader
-        className={classes.header}
         left={
-          <div className={classes.headerLeft}>
-            <h1 className={classes.name}>{list.name}</h1>
+          <div>
+            <h1>{list.name}</h1>
             <p>
               {untickedCount} unticked item{untickedCount !== 1 && 's'}
             </p>
