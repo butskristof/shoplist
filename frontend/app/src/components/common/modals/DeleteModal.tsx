@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { Modal } from '@mantine/core';
 import { IconTrash, IconX } from '@tabler/icons-react';
 import IconButton from '@/components/common/IconButton.tsx';
@@ -14,7 +14,7 @@ export interface Props {
     isError: boolean;
     error: Error;
   };
-  confirmText: string;
+  confirmText: ReactNode;
   onDelete: () => void;
   onClose: () => void;
 }

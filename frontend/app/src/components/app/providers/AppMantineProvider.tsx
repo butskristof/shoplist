@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import { CSSVariablesResolver, MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { PropsWithChildren } from '@/types/PropsWithChildren.ts';
+import '@mantine/notifications/styles.css';
 
 const resolver: CSSVariablesResolver = (theme) => ({
   variables: {},
@@ -18,6 +20,7 @@ const AppMantineProvider: FC<PropsWithChildren> = ({ children }) => (
     cssVariablesResolver={resolver}
   >
     {children}
+    <Notifications />
   </MantineProvider>
 );
 
