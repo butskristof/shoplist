@@ -1,4 +1,4 @@
-import { Alert, Button } from '@mantine/core';
+import { Alert, Button, Modal } from '@mantine/core';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,9 +20,10 @@ type EditShoplistItem = yup.InferType<typeof schema>;
 
 interface Props {
   listId: string;
+  onClose: () => void;
 }
 
-const CreateShoplistItem: FC<Props> = ({ listId }) => {
+const CreateShoplistItem: FC<Props> = ({ listId, onClose }) => {
   //#region form
 
   const { control, handleSubmit } = useForm<EditShoplistItem>({
@@ -51,57 +52,64 @@ const CreateShoplistItem: FC<Props> = ({ listId }) => {
   //#endregion
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className={clsx('form', classes.create)}
+    <Modal
+      opened
+      onClose={onClose}
+      title="Add new list item"
     >
-      <div className="field">
-        <TextInput
-          name="name"
-          control={control}
-          label="Name"
-          withAsterisk
-          disabled={isFormDisabled}
-        />
-      </div>
-
-      <div className="footer">
-        <div className="result">
-          {mutation.isSuccess && (
-            <Alert
-              styles={{
-                root: {
-                  padding: 'var(--mantine-spacing-xs)',
-                },
-                icon: {
-                  marginInlineEnd: '0.25rem',
-                },
-              }}
-              color="green"
-              icon={<IoCheckmark />}
-            >
-              List item saved
-            </Alert>
-          )}
-          {mutation.isError && (
-            <ApiError
-              error={mutation.error}
-              message="Saving the list item failed, please refer to the error information below for more details."
-            />
-          )}
-        </div>
-        <div className="actions">
-          <Button
-            type="submit"
-            leftSection={<LuSave />}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={clsx('form', classes.create)}
+      >
+        <div className="field">
+          <TextInput
+            data-autofocus
+            name="name"
+            control={control}
+            label="Name"
+            withAsterisk
             disabled={isFormDisabled}
-            loading={mutation.isPending}
-          >
-            Save
-          </Button>
+          />
         </div>
-      </div>
-    </form>
+
+        <div className="footer">
+          <div className="result">
+            {mutation.isSuccess && (
+              <Alert
+                styles={{
+                  root: {
+                    padding: 'var(--mantine-spacing-xs)',
+                  },
+                  icon: {
+                    marginInlineEnd: '0.25rem',
+                  },
+                }}
+                color="green"
+                icon={<IoCheckmark />}
+              >
+                List item saved
+              </Alert>
+            )}
+            {mutation.isError && (
+              <ApiError
+                error={mutation.error}
+                message="Saving the list item failed, please refer to the error information below for more details."
+              />
+            )}
+          </div>
+          <div className="actions">
+            <Button
+              type="submit"
+              leftSection={<LuSave />}
+              disabled={isFormDisabled}
+              loading={mutation.isPending}
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      </form>
+    </Modal>
   );
 };
 
