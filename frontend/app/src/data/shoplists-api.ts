@@ -12,21 +12,12 @@ export const useShoplistsApiGetList = (id: string) =>
   useQuery({
     queryKey: ['lists', id],
     queryFn: () => ShoplistsApi.getList(id),
-    // retry: false, // TODO conditional for 404?
   });
 
-export const useShoplistApiCreateItem = (queryClient: QueryClient) =>
+export const useShoplistsApiUpsertItem = (queryClient: QueryClient, isEdit: boolean) =>
   useMutation({
-    mutationFn: ShoplistsApi.createItem,
-    onSuccess: (response: ShoplistItem) =>
-      queryClient.invalidateQueries({
-        queryKey: ['lists', response.listId],
-      }),
-  });
-
-export const useShoplistsApiUpdateItem = (queryClient: QueryClient) =>
-  useMutation({
-    mutationFn: ShoplistsApi.updateItem,
+    mutationFn: (payload) =>
+      isEdit ? ShoplistsApi.updateItem(payload) : ShoplistsApi.createItem(payload),
     onSuccess: (response: ShoplistItem) =>
       queryClient.invalidateQueries({
         queryKey: ['lists', response.listId],

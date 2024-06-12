@@ -1,4 +1,10 @@
+// these are global styles applied to the whole project
+// when adding actual styles for e.g. forms, choose meaningful class
+// names which will not override or clash with existing styles
+
 :root {
+  // give items room to breathe by default, but push them together
+  // on smaller screens
   --default-padding: var(--mantine-spacing-md);
   @media (min-width: $mantine-breakpoint-sm) {
     --default-padding: var(--mantine-spacing-xl);
@@ -9,12 +15,21 @@ html, body {
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
 }
 
-h1, h2, h3, h4, h5, h6, p {
-  margin: 0;
+a {
+  // remove default link styling
+  color: var(--mantine-color-text);
+  text-decoration: none;
 }
 
-a {
-  @include unstyled-link;
+.full-page-info {
+  padding-block: 4rem;
+  height: 100%;
+  text-align: center;
+  @include flex-column;
+
+  .actions {
+    margin-top: 2rem;
+  }
 }
 
 .form {

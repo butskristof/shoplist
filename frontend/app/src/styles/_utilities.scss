@@ -33,26 +33,10 @@
   flex-wrap: wrap;
 }
 
-@mixin unstyled-link {
-  color: var(--mantine-color-text);
-  text-decoration: none;
-}
-
 @mixin unstyled-ul {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-
-@mixin info-page {
-  padding-block: 4rem;
-  height: 100%;
-  text-align: center;
-  @include flex-column;
-}
-
-@mixin info-page-actions {
-  margin-top: 2rem;
 }
 
 @mixin pre-overflow {

@@ -1,5 +1,4 @@
 import { FC, ReactNode } from 'react';
-import classes from './NotFound.module.scss';
 import { capitalize } from '@/utilities/string.ts';
 
 interface Props {
@@ -8,10 +7,10 @@ interface Props {
 }
 
 const NotFound: FC<Props> = ({ entity = 'Entity', actions }) => (
-  <div className={classes.notFound}>
+  <div className="full-page-info">
     <h1>{capitalize(entity)} not found</h1>
     <p>Sorry, we couldn&apos;t find the {entity} you requested.</p>
-    {actions && <div className={classes.actions}>{actions}</div>}
+    {actions && <div className="actions">{actions}</div>}
   </div>
 );
 

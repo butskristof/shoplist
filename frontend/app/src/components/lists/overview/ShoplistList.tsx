@@ -5,12 +5,9 @@ import classes from './ShoplistList.module.scss';
 
 interface Props {
   lists: Shoplist[];
-  loading: boolean;
 }
 
-const ShoplistList: FC<Props> = ({ lists, loading }) => {
-  if (loading) return <div>Fetching lists...</div>;
-
+const ShoplistList: FC<Props> = ({ lists }) => {
   if (lists.length > 0)
     return (
       <div className={classes.lists}>

@@ -28,8 +28,7 @@ export default ({ mode = 'development' }: UserConfig) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "./src/styles/_mantine"; 
-        @import "./src/styles/_utilities";`,
+          additionalData: `@import "./src/styles/_mantine"; @import "./src/styles/_utilities";`,
         },
       },
     },

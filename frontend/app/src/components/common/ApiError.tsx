@@ -6,7 +6,7 @@ import NotFound from '@/components/common/NotFound.tsx';
 import classes from './ApiError.module.scss';
 
 interface Props {
-  error: unknown;
+  error: Error;
   message?: string;
   entity?: string;
   actions?: ReactNode;
@@ -28,7 +28,7 @@ const ApiError: FC<Props> = ({ error, message, entity, actions, page = false }) 
       />
     );
 
-  const wrapperClassName = clsx(classes.ApiError, page && classes.page);
+  const wrapperClassName = clsx(classes.ApiError, page && 'full-page-info');
   return (
     <div className={wrapperClassName}>
       <div className={classes.message}>
