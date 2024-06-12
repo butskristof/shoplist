@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Modal } from '@mantine/core';
-import { IconTrash } from '@tabler/icons-react';
+import { IconTrash, IconX } from '@tabler/icons-react';
 import IconButton from '@/components/common/IconButton.tsx';
 import MutationResult from '@/components/common/MutationResult.tsx';
 import { capitalize } from '@/utilities/string.ts';
@@ -38,13 +38,15 @@ const DeleteModal: FC<Props> = ({ entity, onClose, onDelete, confirmText, mutati
         <div className={classes.confirmText}>{confirmText}</div>
         <div className={classes.actions}>
           <IconButton
-            icon={<IconTrash />}
+            icon={<IconX />}
+            variant="light"
             disabled={mutation.isLoading}
             onClick={onClose}
           >
             No, keep {entity.toLowerCase()}
           </IconButton>
           <IconButton
+            color="red"
             icon={<IconTrash />}
             loading={mutation.isLoading}
             onClick={onDelete}

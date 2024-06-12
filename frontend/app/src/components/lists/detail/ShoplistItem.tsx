@@ -38,7 +38,10 @@ const ShoplistItem: FC<Props> = ({ item, onEdit, onDelete }) => {
             <ActionIcon onClick={onEdit}>
               <IconEdit size={16} />
             </ActionIcon>
-            <ActionIcon onClick={onDelete}>
+            <ActionIcon
+              onClick={onDelete}
+              color="red"
+            >
               <IconTrash size={16} />
             </ActionIcon>
           </div>

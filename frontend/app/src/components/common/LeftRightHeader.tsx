@@ -12,8 +12,8 @@ const LeftRightHeader: FC<Props> = ({ left, right, className }) => {
 
   return (
     <div className={headerClassNames}>
-      {left != null ? left : <div className={classes.left}></div>}
-      {right != null ? right : <div className={classes.right}></div>}
+      <div className={classes.left}>{left}</div>
+      <div className={classes.right}>{right}</div>
     </div>
   );
 };
