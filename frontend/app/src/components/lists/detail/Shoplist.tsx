@@ -19,7 +19,7 @@ const Shoplist: FC<Props> = ({ list }) => {
   const [showCreate, setShowCreate] = useState(true);
 
   return (
-    <div>
+    <div className={classes.shoplist}>
       <LeftRightHeader
         className={classes.header}
         left={

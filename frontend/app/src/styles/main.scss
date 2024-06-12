@@ -16,3 +16,22 @@ h1, h2, h3, h4, h5, h6, p {
 a {
   @include unstyled-link;
 }
+
+.form {
+  @include flex-column;
+  gap: var(--mantine-spacing-md);
+
+  .footer {
+    @include flex-row-justify-between-wrapping;
+    align-items: flex-end;
+    flex-wrap: wrap-reverse;
+
+    .result {
+      max-width: 100%;
+    }
+
+    .actions {
+      @include flex-row-actions;
+    }
+  }
+}

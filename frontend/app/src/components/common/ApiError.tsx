@@ -14,7 +14,7 @@ interface Props {
 }
 
 const ApiError: FC<Props> = ({ error, message, entity, actions, page = false }) => {
-  const [showDetails, setShowDetails] = useState(true);
+  const [showDetails, setShowDetails] = useState(false);
   const toggleShowDetails = () => setShowDetails(!showDetails);
 
   const isAxiosError = axios.isAxiosError(error);
@@ -42,7 +42,7 @@ const ApiError: FC<Props> = ({ error, message, entity, actions, page = false }) 
           defaultValue="API_RESPONSE"
           className={classes.details}
         >
-          <Tabs.List justify="center">
+          <Tabs.List justify={page ? 'center' : 'left'}>
             <Tabs.Tab value="API_RESPONSE">API response</Tabs.Tab>
             <Tabs.Tab value="ERROR">Error</Tabs.Tab>
           </Tabs.List>
