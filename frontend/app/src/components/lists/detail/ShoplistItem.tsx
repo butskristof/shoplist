@@ -15,7 +15,7 @@ interface Props {
 
 const ShoplistItem: FC<Props> = ({ item, onEdit, onDelete }) => {
   const queryClient = useQueryClient();
-  const mutation = useShoplistsApiUpsertItem(queryClient);
+  const mutation = useShoplistsApiUpsertItem(queryClient, true);
   // TODO optimistic update?
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
