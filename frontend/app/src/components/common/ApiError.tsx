@@ -28,7 +28,7 @@ const ApiError: FC<Props> = ({ error, message, entity, actions, page = false }) 
       />
     );
 
-  const wrapperClassName = clsx(classes.ApiError, page && classes.page);
+  const wrapperClassName = clsx(classes.ApiError, page && 'full-page-info');
   return (
     <div className={wrapperClassName}>
       <div className={classes.message}>

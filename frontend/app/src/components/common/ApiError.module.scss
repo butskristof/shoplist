@@ -2,14 +2,6 @@
   max-width: 100%;
   @include flex-column;
   gap: var(--mantine-spacing-md);
-
-  &.page {
-    @include info-page;
-  }
-
-  &.page .actions {
-    @include info-page-actions;
-  }
 }
 
 .details {

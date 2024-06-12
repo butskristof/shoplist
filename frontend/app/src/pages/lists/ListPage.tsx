@@ -1,11 +1,9 @@
-import { Link, useParams } from 'react-router-dom';
-import { Button } from '@mantine/core';
-import { IoArrowBack } from 'react-icons/io5';
+import { useParams } from 'react-router-dom';
 import { useShoplistsApiGetList } from '@/data/shoplists-api.ts';
 import EntityLoader from '@/components/common/EntityLoader.tsx';
 import Shoplist from '@/components/lists/detail/Shoplist.tsx';
-import classes from './ListPage.module.scss';
 import ApiError from '@/components/common/ApiError.tsx';
+import DetailPageHeader from '@/components/common/DetailPageHeader.tsx';
 
 const ListPage = () => {
   // we assume id will be available, otherwise the router
@@ -15,17 +13,10 @@ const ListPage = () => {
 
   return (
     <>
-      <div className={classes.header}>
-        <Button
-          component={Link}
-          to="/lists"
-          leftSection={<IoArrowBack />}
-          variant="light"
-        >
-          Back to overview
-        </Button>
-      </div>
+      <DetailPageHeader to="/lists" />
+
       {query.isPending && <EntityLoader entity="list" />}
+
       {query.isError && (
         <ApiError
           error={query.error}
@@ -33,6 +24,7 @@ const ListPage = () => {
           page
         />
       )}
+
       {query.isSuccess && <Shoplist list={query.data} />}
     </>
   );
