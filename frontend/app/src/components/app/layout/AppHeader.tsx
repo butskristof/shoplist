@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
-import { IoCartOutline } from 'react-icons/io5';
+import { IconShoppingCart } from '@tabler/icons-react';
 import { PropsWithClassName } from '@/types/PropsWithClassName.ts';
 import classes from './AppHeader.module.scss';
 
@@ -13,7 +13,7 @@ const AppHeader: FC<PropsWithClassName> = ({ className }) => {
         to="/"
         className={classes.brand}
       >
-        <IoCartOutline size={36} />
+        <IconShoppingCart size={36} />
         <div>Shoplist</div>
       </Link>
     </header>

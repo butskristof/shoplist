@@ -1,15 +1,10 @@
-import { FC } from 'react';
 import clsx from 'clsx';
-import { ActionIcon, Tooltip, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
-import {
-  IoExitOutline,
-  IoLogoGithub,
-  IoMoonOutline,
-  IoSettingsOutline,
-  IoSunnyOutline,
-} from 'react-icons/io5';
+import { useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
+import { IconBrandGithub, IconLogout, IconMoon, IconSettings, IconSun } from '@tabler/icons-react';
+import { FC } from 'react';
 import { PropsWithClassName } from '@/types/PropsWithClassName.ts';
 import classes from './AppFooter.module.scss';
+import AppFooterAction from '@/components/app/layout/AppFooterAction.tsx';
 
 const AppFooter: FC<PropsWithClassName> = ({ className }) => {
   const footerClassName = clsx(className, classes.footer);
@@ -20,66 +15,29 @@ const AppFooter: FC<PropsWithClassName> = ({ className }) => {
   return (
     <footer className={footerClassName}>
       <div className={classes.actions}>
-        <Tooltip
+        <AppFooterAction
+          icon={colorScheme === 'dark' ? <IconSun /> : <IconMoon />}
           label="Toggle colour scheme"
-          withArrow
-          arrowSize={8}
-        >
-          <ActionIcon
-            size="lg"
-            color="gray"
-            variant="subtle"
-            onClick={toggleColorScheme}
-          >
-            {colorScheme === 'dark' ? (
-              <IoSunnyOutline size="1.2rem" />
-            ) : (
-              <IoMoonOutline size="1.2rem" />
-            )}
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip
+          onClick={toggleColorScheme}
+        />
+
+        <AppFooterAction
+          icon={<IconBrandGithub />}
           label="GitHub"
-          withArrow
-          arrowSize={8}
-        >
-          <ActionIcon
-            size="lg"
-            color="gray"
-            variant="subtle"
-            component="a"
-            href="https://gitub.com/butskristof/shoplist"
-            target="_blank"
-          >
-            <IoLogoGithub size="1.2rem" />
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip
+          component="a"
+          href="https://gitub.com/butskristof/shoplist"
+          target="_blank"
+        />
+
+        <AppFooterAction
+          icon={<IconSettings />}
           label="Settings"
-          withArrow
-          arrowSize={8}
-        >
-          <ActionIcon
-            size="lg"
-            color="gray"
-            variant="subtle"
-          >
-            <IoSettingsOutline size="1.2rem" />
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip
+        />
+
+        <AppFooterAction
+          icon={<IconLogout />}
           label="Sign out"
-          withArrow
-          arrowSize={8}
-        >
-          <ActionIcon
-            size="lg"
-            color="gray"
-            variant="subtle"
-          >
-            <IoExitOutline size="1.2rem" />
-          </ActionIcon>
-        </Tooltip>
+        />
       </div>
     </footer>
   );
