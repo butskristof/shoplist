@@ -1,5 +1,5 @@
 .item {
-  @include flex-row-justify-between;
+  @include flex-row-justify-between-wrapping;
   align-items: center;
 }
 
