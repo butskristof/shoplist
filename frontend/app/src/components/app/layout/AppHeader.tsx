@@ -14,7 +14,7 @@ const AppHeader: FC<PropsWithClassName> = ({ className }) => {
         className={classes.brand}
       >
         <IconShoppingCart size={36} />
-        <div>Shoplist</div>
+        <div>Shoplists</div>
       </Link>
     </header>
   );
