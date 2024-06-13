@@ -4,18 +4,21 @@ on:
   pull_request:
     branches: ['main']
 
+env:
+  APP_PATH: './frontend/app'
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    default:
+    defaults:
       run:
-        working-directory: ./frontend/app
+        working-directory: ${{env.APP_PATH}}
     steps:
     - uses: actions/checkout@v4
     - name: Set up Node
-      uses: action/setup-node@v3
+      uses: actions/setup-node@v3
       with:
-        node-version-file: '.nvmrc'
+        node-version-file: '${{env.APP_PATH}}/.nvmrc'
     - name: Install dependencies
       run: npm ci
     - name: Formatting
