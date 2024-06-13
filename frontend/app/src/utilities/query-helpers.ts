@@ -9,7 +9,7 @@ export const retryIfNotClientError = (failureCount: number, error: unknown) => {
   }
 
   if (isAxiosError(error) && HTTP_STATUS_TO_NOT_RETRY.includes(error.response?.status ?? 0)) {
-    console.log(`Aborting retry due to ${error.response?.status} status`);
+    // console.log(`Aborting retry due to ${error.response?.status} status`);
     return false;
   }
 
