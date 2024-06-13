@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ${{APP_PATH}}
+        working-directory: ${{env.APP_PATH}}
     steps:
     - uses: actions/checkout@v4
     - name: Set up Node
       uses: actions/setup-node@v3
       with:
-        node-version-file: '${{APP_PATH}}/.nvmrc'
+        node-version-file: '${{env.APP_PATH}}/.nvmrc'
     - name: Install dependencies
       run: npm ci
     - name: Formatting
