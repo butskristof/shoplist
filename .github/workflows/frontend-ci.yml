@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Node
-      uses: action/setup-node@v3
+      uses: actions/setup-node@v3
       with:
         node-version-file: '.nvmrc'
     - name: Install dependencies
