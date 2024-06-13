@@ -25,7 +25,7 @@ const AppFooter: FC<PropsWithClassName> = ({ className }) => {
           icon={<IconBrandGithub />}
           label="GitHub"
           component="a"
-          href="https://gitub.com/butskristof/shoplist"
+          href="https://github.com/butskristof/shoplists"
           target="_blank"
         />
 

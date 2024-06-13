@@ -1,4 +1,4 @@
-# Shoplist
+# Shoplists
 Keep track of grocery shopping with some interesting features:
 - Predictive occurence on how often an item is probably running out
 - Price track similar items across different stores
