@@ -59,6 +59,13 @@ module.exports = {
     ],
     'import/newline-after-import': ['error', { count: 1 }],
     'react/react-in-jsx-scope': 'off',
-    '@typescript-eslint/no-misused-promises': 'off'
+    '@typescript-eslint/no-misused-promises': 'off',
+    'no-alert': 'off',
+    'no-console': [
+      process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+      {
+        allow: ['error'],
+      },
+    ],
   },
 };
