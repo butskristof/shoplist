@@ -1,12 +1,12 @@
 export interface BffUser {
-  sub: string;
-  auth_time: number;
-  name: string;
-  given_name: string;
-  preferred_username: string;
-  nickname: string;
-  groups: string;
-  'bff:session_expires_in': number;
+  sub?: string;
+  auth_time?: number;
+  name?: string;
+  given_name?: string;
+  preferred_username?: string;
+  nickname?: string;
+  groups?: string;
+  'bff:session_expires_in'?: number;
 }
 
 export type Claim = {
@@ -19,5 +19,10 @@ export type Claim = {
     | 'nickname'
     | 'groups'
     | 'bff:session_expires_in';
-  value: unknown;
+  value?: string;
 };
+
+export interface BffDiagnostics {
+  UserAccessToken?: string;
+  ClientAccessToken?: string;
+}

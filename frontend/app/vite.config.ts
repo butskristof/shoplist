@@ -1,3 +1,4 @@
+import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, loadEnv, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 // @ts-ignore vite-plugin-eslint does not correctly export its types...
@@ -31,7 +32,7 @@ export default ({ mode = 'development' }: UserConfig) => {
     plugins: [react(), eslint(), basicSsl()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
     server: {

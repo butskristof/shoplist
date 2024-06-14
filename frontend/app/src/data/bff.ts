@@ -9,3 +9,12 @@ export const useBffUser = () =>
     // cacheTime: Infinity,
     retry: false,
   });
+
+export const useBffDiagnostics = () =>
+  useQuery({
+    queryKey: ['bff', 'diagnostics'],
+    queryFn: Bff.getDiagnostics,
+    staleTime: Infinity,
+    // cacheTime: Infinity,
+    retry: false,
+  });
