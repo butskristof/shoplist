@@ -1,11 +1,13 @@
 using Shoplists.Api;
 using Shoplists.Api.Modules;
+using Shoplists.Application;
 using Shoplists.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddInfrastructure()
+    .AddApplication()
     .AddApi();
 
 var app = builder.Build();

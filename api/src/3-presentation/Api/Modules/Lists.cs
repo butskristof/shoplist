@@ -1,4 +1,7 @@
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Shoplists.Api.Extensions;
+using Shoplists.Application.Modules.Lists;
 
 namespace Shoplists.Api.Modules;
 
@@ -16,8 +19,13 @@ internal static class Lists
         group
             .MapPost("", CreateList)
             .WithName(nameof(CreateList))
-            .ProducesNoContent();
+            .ProducesCreated<CreateList.Response>()
+            .ProducesValidationProblem();
     }
 
-    private static Task<IResult> CreateList() => Task.FromResult(Results.NoContent());
+    private static async Task<IResult> CreateList([FromBody] CreateList.Request request, ISender sender)
+    {
+        var result = await sender.Send(request);
+        return result.MapToValueOrProblem(response => TypedResults.Created($"/{GroupName}/{response.Id}", response));
+    }
 }
