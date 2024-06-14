@@ -9,8 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # image: ['api', 'frontend']
-        image: ['frontend']
+        image: ['api', 'frontend']
     steps:
     - uses: actions/checkout@v4
     - name: Set up Docker Buildx
