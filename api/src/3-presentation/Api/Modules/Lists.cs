@@ -10,9 +10,7 @@ internal static class Lists
     {
         var group = endpoints
             .MapGroup($"/{GroupName}")
-            .WithGroupName(GroupName)
-            .WithTags(GroupName)
-            .WithOpenApi();
+            .WithTags(GroupName);
         // .RequireAuthorization();
 
         group

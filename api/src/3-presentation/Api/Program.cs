@@ -1,18 +1,28 @@
+using Shoplists.Api;
 using Shoplists.Api.Modules;
+using Shoplists.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddEndpointsApiExplorer()
-    .AddSwaggerGen();
+    .AddInfrastructure()
+    .AddApi();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-}
+app
+    // the default exception handler will catch unhandled exceptions and return 
+    // them as ProblemDetails with status code 500 Internal Server Error
+    .UseExceptionHandler()
+    // the status code pages will map additional failed requests (outside of
+    // those throwing exceptions) to responses with ProblemDetails body content
+    // this includes 404, method not allowed, ... (all status codes between 400 and 599)
+    // keep in mind that this middleware will only activate if the body is empty when
+    // it reaches it
+    .UseStatusCodePages();
 
+app.MapHealthChecks("/health");
+app.MapSwagger();
 app
     .MapListsEndpoints();
 
