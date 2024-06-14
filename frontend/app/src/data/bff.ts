@@ -6,7 +6,7 @@ export const useBffUser = () =>
     queryKey: ['bff', 'user'],
     queryFn: Bff.getUser,
     staleTime: Infinity,
-    // cacheTime: Infinity,
+    gcTime: Infinity,
     retry: false,
   });
 
@@ -15,6 +15,6 @@ export const useBffDiagnostics = () =>
     queryKey: ['bff', 'diagnostics'],
     queryFn: Bff.getDiagnostics,
     staleTime: Infinity,
-    // cacheTime: Infinity,
+    gcTime: Infinity,
     retry: false,
   });
