@@ -4,6 +4,7 @@ import ListsPage from '@/pages/lists/ListsPage.tsx';
 import ListPage from '@/pages/lists/ListPage.tsx';
 import AppLayout from '@/components/app/layout/AppLayout.tsx';
 import NotFoundPage from '@/pages/NotFoundPage.tsx';
+import UserDebugPage from '@/pages/debug/UserDebugPage.tsx';
 
 const AppRouterProvider = () => (
   <Router>
@@ -29,6 +30,12 @@ const AppRouterProvider = () => (
           <Route
             path=":id"
             element={<ListPage />}
+          />
+        </Route>
+        <Route path="/debug">
+          <Route
+            path="user"
+            element={<UserDebugPage />}
           />
         </Route>
         <Route

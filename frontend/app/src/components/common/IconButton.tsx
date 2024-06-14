@@ -1,5 +1,6 @@
 import { Button, ButtonProps, createPolymorphicComponent, px } from '@mantine/core';
 import { cloneElement, forwardRef, ReactElement } from 'react';
+import { IconProps } from '@tabler/icons-react';
 
 // https://mantine.dev/guides/polymorphic/#wrapping-polymorphic-components
 // we use Mantine's utility function to create a polymorphic wrapper around
@@ -13,11 +14,12 @@ interface Props extends ButtonProps {
 
 const IconButton = createPolymorphicComponent<'button', Props>(
   forwardRef<HTMLButtonElement, Props>(({ icon, ...props }, ref) => {
-    const clonedIcon = cloneElement(icon, { size: px('1rem') });
+    const buttonIcon =
+      (icon.props as IconProps)?.size != null ? icon : cloneElement(icon, { size: px('1rem') });
 
     return (
       <Button
-        leftSection={clonedIcon}
+        leftSection={buttonIcon}
         {...props}
         ref={ref}
       />

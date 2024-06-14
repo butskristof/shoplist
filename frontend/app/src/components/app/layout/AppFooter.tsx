@@ -5,12 +5,14 @@ import { FC } from 'react';
 import { PropsWithClassName } from '@/types/PropsWithClassName.ts';
 import classes from './AppFooter.module.scss';
 import AppFooterAction from '@/components/app/layout/AppFooterAction.tsx';
+import { useAuth } from '@/utilities/auth.ts';
 
 const AppFooter: FC<PropsWithClassName> = ({ className }) => {
   const footerClassName = clsx(className, classes.footer);
 
   const { toggleColorScheme } = useMantineColorScheme();
   const colorScheme = useComputedColorScheme(); // does not return auto
+  const { isAuthenticated } = useAuth();
 
   return (
     <footer className={footerClassName}>
@@ -34,10 +36,14 @@ const AppFooter: FC<PropsWithClassName> = ({ className }) => {
           label="Settings"
         />
 
-        <AppFooterAction
-          icon={<IconLogout />}
-          label="Sign out"
-        />
+        {isAuthenticated && (
+          <AppFooterAction
+            icon={<IconLogout />}
+            label="Sign out"
+            component="a"
+            href="/bff/logout"
+          />
+        )}
       </div>
     </footer>
   );
