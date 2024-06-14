@@ -1,12 +1,17 @@
 using Shoplists.Api;
 using Shoplists.Api.Modules;
 using Shoplists.Application;
+using Shoplists.Application.Common.Constants;
 using Shoplists.Infrastructure;
+using Shoplists.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddInfrastructure()
+    .AddPersistence(
+        builder.Configuration.GetConnectionString(ConfigurationConstants.AppDbContextConnectionStringKey)
+    )
     .AddApplication()
     .AddApi();
 

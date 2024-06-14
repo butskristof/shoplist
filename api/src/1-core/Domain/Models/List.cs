@@ -2,9 +2,9 @@ using Shoplists.Domain.Common;
 
 namespace Shoplists.Domain.Models;
 
-public sealed class ShoplistItem : BaseEntity
+public sealed class List : BaseEntity
 {
-    public Guid ShoplistId { get; set; }
-
     public required string Name { get; set; }
+
+    public List<ListItem> Items { get; set; } = [];
 }
