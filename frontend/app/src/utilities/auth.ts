@@ -1,9 +1,13 @@
+import { useMemo } from 'react';
 import { useBffUser } from '@/data/bff.ts';
 import { BffUser, Claim } from '@/types/bff.types.ts';
 
 export const useAuth = () => {
   const query = useBffUser();
-  const user = query.data != null ? mapClaimsToBffUser(query.data) : undefined;
+  const user = useMemo(
+    () => (query.data != null ? mapClaimsToBffUser(query.data) : null),
+    [query.data],
+  );
 
   return {
     query,
