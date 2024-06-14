@@ -1,3 +1,5 @@
+using Shoplists.Api.Modules;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -10,5 +12,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
 }
+
+app
+    .MapListsEndpoints();
 
 app.Run();
