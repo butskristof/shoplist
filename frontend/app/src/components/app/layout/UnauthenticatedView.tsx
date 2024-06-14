@@ -9,9 +9,10 @@ const UnauthenticatedView = () => {
       <p>Please log in to access the application.</p>
       <div className="actions">
         <IconButton
-          icon={<IconLogin2 />}
+          icon={<IconLogin2 size="1.25rem" />}
           component="a"
           href={`/bff/login?returnUrl=${returnUrl}`}
+          size="lg"
         >
           Log in
         </IconButton>
