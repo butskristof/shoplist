@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <AssemblyName>Shoplists.Domain</AssemblyName>
         <RootNamespace>Shoplists.Domain</RootNamespace>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
 </Project>

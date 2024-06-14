@@ -6,6 +6,11 @@
         <Nullable>enable</Nullable>
         <AssemblyName>Shoplists.Persistence</AssemblyName>
         <RootNamespace>Shoplists.Persistence</RootNamespace>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\1-core\Application\Application.csproj" />
+    </ItemGroup>
 
 </Project>
