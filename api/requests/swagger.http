@@ -1,0 +1,5 @@
+GET {{BASE_URL}}/swagger/v1/swagger.json
+
+###
+
+GET {{BASE_URL}}/swagger/v1/swagger.yaml
