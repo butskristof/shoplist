@@ -1,7 +1,9 @@
+using System.Security.Authentication;
 using ErrorOr;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Shoplists.Application.Common.Authentication;
 using Shoplists.Application.Common.FluentValidation;
 using Shoplists.Application.Common.Persistence;
 using Shoplists.Domain.Models;
@@ -34,11 +36,13 @@ public static class CreateList
 
         private readonly ILogger<Handler> _logger;
         private readonly IAppDbContext _db;
+        private readonly IAuthenticationInfo _authenticationInfo;
 
-        public Handler(ILogger<Handler> logger, IAppDbContext db)
+        public Handler(ILogger<Handler> logger, IAppDbContext db, IAuthenticationInfo authenticationInfo)
         {
             _logger = logger;
             _db = db;
+            _authenticationInfo = authenticationInfo;
         }
 
         #endregion
@@ -47,7 +51,8 @@ public static class CreateList
         {
             _logger.LogDebug("Creating a new List");
 
-            var list = new List { Name = request.Name };
+            var owner = _authenticationInfo.UserId ?? throw new AuthenticationException("Could not determine user ID");
+            var list = new List { Name = request.Name, Owner = owner };
             _logger.LogDebug("Mapped request to entity");
 
             _db.Lists.Add(list);
@@ -56,7 +61,7 @@ public static class CreateList
 
             var response = new Response(list.Id, list.Name);
             _logger.LogDebug("Mapped entity to response DTO");
-            
+
             return response;
         }
     }

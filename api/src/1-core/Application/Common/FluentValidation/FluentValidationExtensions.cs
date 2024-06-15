@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using FluentValidation;
 using Shoplists.Application.Common.Constants;
 
@@ -6,11 +5,11 @@ namespace Shoplists.Application.Common.FluentValidation;
 
 internal static class FluentValidationExtensions
 {
-    private static IRuleBuilderOptions<T, TProperty> NotEmptyWithErrorCode<T, TProperty>(
-        this IRuleBuilder<T, TProperty> ruleBuilder)
+    internal static IRuleBuilderOptions<T, TProperty> NotEmptyWithErrorCode<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder, string errorCode = ErrorCodes.Required)
         => ruleBuilder
             .NotEmpty()
-            .WithMessage(ErrorCodes.Required);
+            .WithMessage(errorCode);
 
     internal static IRuleBuilderOptions<T, string?> ValidString<T>(this IRuleBuilder<T, string?> ruleBuilder,
         bool required = true,

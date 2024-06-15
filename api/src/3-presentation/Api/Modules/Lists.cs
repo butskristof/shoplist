@@ -13,8 +13,8 @@ internal static class Lists
     {
         var group = endpoints
             .MapGroup($"/{GroupName}")
-            .WithTags(GroupName);
-        // .RequireAuthorization();
+            .WithTags(GroupName)
+            .RequireAuthorization();
 
         group
             .MapPost("", CreateList)
