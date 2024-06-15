@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Shoplists.Application.Common.Authentication;
 using Shoplists.Application.Common.Constants;
 using Shoplists.Application.Common.Persistence;
 using Shoplists.Domain.Models;
@@ -10,8 +11,11 @@ internal sealed class AppDbContext : DbContext, IAppDbContext
 {
     #region construction
 
-    public AppDbContext(DbContextOptions options) : base(options)
+    private readonly IAuthenticationInfo _authenticationInfo;
+
+    public AppDbContext(DbContextOptions options, IAuthenticationInfo authenticationInfo) : base(options)
     {
+        _authenticationInfo = authenticationInfo;
     }
 
     #endregion
@@ -19,7 +23,21 @@ internal sealed class AppDbContext : DbContext, IAppDbContext
     #region entities
 
     public DbSet<List> Lists => Set<List>();
-    public DbSet<ListItem> ListItems => Set<ListItem>();
+
+    #endregion
+
+    #region queryables
+
+    public IQueryable<List> CurrentUserLists(bool tracking)
+    {
+        var query = Lists
+            .Where(l => l.Owner == _authenticationInfo.UserId)
+            .AsQueryable();
+
+        if (!tracking) query = query.AsNoTracking();
+
+        return query;
+    }
 
     #endregion
 
@@ -42,7 +60,7 @@ internal sealed class AppDbContext : DbContext, IAppDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
+
         // the base method is empty, but retain the call to minimise impact if
         // it should be used in a future version
         base.OnModelCreating(modelBuilder);

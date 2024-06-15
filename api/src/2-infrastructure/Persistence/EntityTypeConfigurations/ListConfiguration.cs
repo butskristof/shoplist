@@ -8,5 +8,8 @@ internal sealed class ListConfiguration : IEntityTypeConfiguration<List>
 {
     public void Configure(EntityTypeBuilder<List> builder)
     {
+        builder
+            .Property(e => e.Owner)
+            .IsRequired();
     }
 }
