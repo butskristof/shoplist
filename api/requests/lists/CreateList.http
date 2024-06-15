@@ -1,6 +1,7 @@
 POST {{BASE_URL}}/lists
 Content-Type: application/json
+Authorization: Bearer {{ACCESS_TOKEN}}
 
 {
-    "name": "new list"
+    "name": "test"
 }

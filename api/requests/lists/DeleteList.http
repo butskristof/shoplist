@@ -1,0 +1,4 @@
+@id=419602dc-ced7-44e2-94b3-c73be3360eac
+
+DELETE {{BASE_URL}}/lists/{{id}}
+Authorization: Bearer {{ACCESS_TOKEN}}

@@ -9,6 +9,9 @@ internal sealed class ListItemConfiguration : IEntityTypeConfiguration<ListItem>
     public void Configure(EntityTypeBuilder<ListItem> builder)
     {
         builder
+            .ToTable("ListItems");
+        
+        builder
             .HasOne<List>()
             .WithMany(l => l.Items)
             .HasForeignKey(li => li.ListId)

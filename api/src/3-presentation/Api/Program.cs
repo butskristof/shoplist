@@ -8,11 +8,12 @@ using Shoplists.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddConfiguration()
+    .AddApplication()
     .AddInfrastructure()
     .AddPersistence(
         builder.Configuration.GetConnectionString(ConfigurationConstants.AppDbContextConnectionStringKey)
     )
-    .AddApplication()
     .AddApi();
 
 var app = builder.Build();
@@ -28,8 +29,12 @@ app
     // it reaches it
     .UseStatusCodePages();
 
+app.UseAuthorization();
+
 app.MapHealthChecks("/health");
-app.MapSwagger();
+app
+    .MapSwagger()
+    .RequireAuthorization();
 app
     .MapListsEndpoints();
 

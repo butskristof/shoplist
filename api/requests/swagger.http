@@ -1,5 +1,7 @@
 GET {{BASE_URL}}/swagger/v1/swagger.json
+Authorization: Bearer {{ACCESS_TOKEN}}
 
 ###
 
 GET {{BASE_URL}}/swagger/v1/swagger.yaml
+Authorization: Bearer {{ACCESS_TOKEN}}

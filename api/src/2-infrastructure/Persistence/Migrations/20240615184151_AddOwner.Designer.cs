@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Shoplists.Persistence;
@@ -11,13 +12,14 @@ using Shoplists.Persistence;
 namespace Shoplists.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240615184151_AddOwner")]
+    partial class AddOwner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:CollationDefinition:case_insensitive_collation", "en-u-ks-primary,en-u-ks-primary,icu,False")
                 .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -32,8 +34,7 @@ namespace Shoplists.Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(512)
-                        .HasColumnType("character varying(512)")
-                        .UseCollation("case_insensitive_collation");
+                        .HasColumnType("character varying(512)");
 
                     b.Property<string>("Owner")
                         .IsRequired()
@@ -41,11 +42,6 @@ namespace Shoplists.Persistence.Migrations
                         .HasColumnType("character varying(512)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name", "Owner")
-                        .IsUnique();
-
-                    NpgsqlIndexBuilderExtensions.UseCollation(b.HasIndex("Name", "Owner"), new[] { "case_insensitive_collation" });
 
                     b.ToTable("Lists");
                 });

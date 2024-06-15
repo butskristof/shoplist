@@ -6,7 +6,8 @@ namespace Shoplists.Application.Common.Persistence;
 public interface IAppDbContext
 {
     DbSet<List> Lists { get; }
-    DbSet<ListItem> ListItems { get; }
+
+    IQueryable<List> CurrentUserLists(bool tracking);
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

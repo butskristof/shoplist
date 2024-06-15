@@ -1,7 +1,10 @@
+using System.Security.Authentication;
 using ErrorOr;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Shoplists.Application.Common.Authentication;
 using Shoplists.Application.Common.FluentValidation;
 using Shoplists.Application.Common.Persistence;
 using Shoplists.Domain.Models;
@@ -24,7 +27,8 @@ public static class CreateList
         public Validator()
         {
             RuleFor(r => r.Name)
-                .ValidString();
+                .Cascade(CascadeMode.Stop)
+                .ValidString(true);
         }
     }
 
@@ -33,12 +37,14 @@ public static class CreateList
         #region construction
 
         private readonly ILogger<Handler> _logger;
-        private readonly IAppDbContext _db;
+        private readonly IAppDbContext _dbContext;
+        private readonly IAuthenticationInfo _authenticationInfo;
 
-        public Handler(ILogger<Handler> logger, IAppDbContext db)
+        public Handler(ILogger<Handler> logger, IAppDbContext dbContext, IAuthenticationInfo authenticationInfo)
         {
             _logger = logger;
-            _db = db;
+            _dbContext = dbContext;
+            _authenticationInfo = authenticationInfo;
         }
 
         #endregion
@@ -47,16 +53,26 @@ public static class CreateList
         {
             _logger.LogDebug("Creating a new List");
 
-            var list = new List { Name = request.Name };
+            if (await _dbContext
+                    .CurrentUserLists(false)
+                    // name should be configured with case-insensitive collation
+                    .AnyAsync(l => l.Name == request.Name, cancellationToken: cancellationToken))
+            {
+                return Error.Conflict(nameof(request.Name));
+            }
+
+            var owner = _authenticationInfo.UserId ??
+                        throw new AuthenticationException("Could not determine user ID");
+            var list = new List { Name = request.Name, Owner = owner };
             _logger.LogDebug("Mapped request to entity");
 
-            _db.Lists.Add(list);
-            await _db.SaveChangesAsync(CancellationToken.None);
+            _dbContext.Lists.Add(list);
+            await _dbContext.SaveChangesAsync(CancellationToken.None);
             _logger.LogDebug("Persisted new entity to database");
 
-            var response = new Response(list.Id, list.Name);
+            var response = new Response(list.Id, list.Name.Trim());
             _logger.LogDebug("Mapped entity to response DTO");
-            
+
             return response;
         }
     }

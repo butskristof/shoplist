@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using FluentValidation;
 using Shoplists.Application.Common.Constants;
 
@@ -6,14 +5,14 @@ namespace Shoplists.Application.Common.FluentValidation;
 
 internal static class FluentValidationExtensions
 {
-    private static IRuleBuilderOptions<T, TProperty> NotEmptyWithErrorCode<T, TProperty>(
-        this IRuleBuilder<T, TProperty> ruleBuilder)
+    internal static IRuleBuilderOptions<T, TProperty> NotEmptyWithErrorCode<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder, string errorCode = ErrorCodes.Required)
         => ruleBuilder
             .NotEmpty()
-            .WithMessage(ErrorCodes.Required);
+            .WithMessage(errorCode);
 
     internal static IRuleBuilderOptions<T, string?> ValidString<T>(this IRuleBuilder<T, string?> ruleBuilder,
-        bool required = true,
+        bool required,
         int maxLength = ApplicationConstants.DefaultMaxStringLength)
     {
         if (required)
@@ -37,11 +36,5 @@ internal static class FluentValidationExtensions
         => ruleBuilder
             .Must(value => Uri.TryCreate(value, UriKind.Absolute, out var uri) &&
                            (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
-            .WithMessage(ErrorCodes.Invalid);
-
-    private static readonly Regex HexColorRegex = new(@"^#(([0-9a-fA-F]{2}){3})$", RegexOptions.Compiled);
-    internal static IRuleBuilderOptions<T, string?> HexColor<T>(this IRuleBuilder<T, string?> ruleBuilder)
-        => ruleBuilder
-            .Matches(HexColorRegex)
             .WithMessage(ErrorCodes.Invalid);
 }
