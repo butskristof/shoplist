@@ -1,0 +1,2 @@
+GET {{BASE_URL}}/lists
+Authorization: Bearer {{ACCESS_TOKEN}}

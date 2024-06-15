@@ -1,0 +1,10 @@
+@id=419602dc-ced7-44e2-94b3-c73be3360eac
+
+PUT {{BASE_URL}}/lists/{{id}}
+Authorization: Bearer {{ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+    "id": "{{id}}",
+    "name": ""
+}

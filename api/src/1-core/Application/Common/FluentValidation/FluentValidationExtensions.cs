@@ -12,7 +12,7 @@ internal static class FluentValidationExtensions
             .WithMessage(errorCode);
 
     internal static IRuleBuilderOptions<T, string?> ValidString<T>(this IRuleBuilder<T, string?> ruleBuilder,
-        bool required = true,
+        bool required,
         int maxLength = ApplicationConstants.DefaultMaxStringLength)
     {
         if (required)
