@@ -23,9 +23,7 @@ internal static class Lists
             .ProducesValidationProblem();
     }
 
-    private static async Task<IResult> CreateList([FromBody] CreateList.Request request, ISender sender)
-    {
-        var result = await sender.Send(request);
-        return result.MapToValueOrProblem(response => TypedResults.Created($"/{GroupName}/{response.Id}", response));
-    }
+    private static Task<IResult> CreateList([FromBody] CreateList.Request request, ISender sender)
+        => sender.Send(request)
+            .MapToCreatedOrProblem(response => $"/{GroupName}/{response.Id}");
 }

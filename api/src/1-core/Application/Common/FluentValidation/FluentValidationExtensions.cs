@@ -38,10 +38,4 @@ internal static class FluentValidationExtensions
             .Must(value => Uri.TryCreate(value, UriKind.Absolute, out var uri) &&
                            (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
             .WithMessage(ErrorCodes.Invalid);
-
-    private static readonly Regex HexColorRegex = new(@"^#(([0-9a-fA-F]{2}){3})$", RegexOptions.Compiled);
-    internal static IRuleBuilderOptions<T, string?> HexColor<T>(this IRuleBuilder<T, string?> ruleBuilder)
-        => ruleBuilder
-            .Matches(HexColorRegex)
-            .WithMessage(ErrorCodes.Invalid);
 }

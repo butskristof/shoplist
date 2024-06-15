@@ -5,10 +5,32 @@ namespace Shoplists.Api.Extensions;
 
 internal static class ResultExtensions
 {
+    internal static IResult MapToOkOrProblem<T>(this ErrorOr<T> result)
+        => result.MapToValueOrProblem(TypedResults.Ok);
+
+    internal static Task<IResult> MapToOkOrProblem<T>(this Task<ErrorOr<T>> result)
+        => result.MapToValueOrProblem(TypedResults.Ok);
+
+    internal static IResult MapToCreatedOrProblem<T>(this ErrorOr<T> result, Func<T, string> getLocation)
+        => result.MapToValueOrProblem(response => TypedResults.Created(getLocation(response), response));
+
+    internal static Task<IResult> MapToCreatedOrProblem<T>(this Task<ErrorOr<T>> result, Func<T, string> getLocation)
+        => result.MapToValueOrProblem(response => TypedResults.Created(getLocation(response), response));
+
+    internal static IResult MapToNoContentOrProblem<T>(this ErrorOr<T> result)
+        => result.MapToValueOrProblem(_ => TypedResults.NoContent());
+
+    internal static Task<IResult> MapToNoContentOrProblem<T>(this Task<ErrorOr<T>> result)
+        => result.MapToValueOrProblem(_ => TypedResults.NoContent());
+
     // if the result doesn't have errors, the function that's passed in to get to an IResult is used
     // in case of errors, a mapping to ProblemDetails is done to provide a meaningful error response 
     internal static IResult MapToValueOrProblem<T>(this ErrorOr<T> result, Func<T, IResult> onValue)
         => result.Match(onValue, MapErrorsToProblemDetailsResult);
+
+    internal static async Task<IResult> MapToValueOrProblem<T>(this Task<ErrorOr<T>> result, Func<T, IResult> onValue)
+        => (await result).MapToValueOrProblem(onValue);
+
 
     private static IResult MapErrorsToProblemDetailsResult(List<Error> errors)
     {

@@ -37,45 +37,47 @@ internal sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavio
     {
         _logger.LogDebug("Validating incoming request {RequestName}", typeof(TRequest).FullName);
 
-        if (!_validators.Any())
+        if (_validators.Any())
+        {
+            _logger.LogDebug("Applying {Count} validators for request type", _validators.Count());
+
+            // create a new validation context scoped to this execution
+            var context = new ValidationContext<TRequest>(request);
+            // run all validators asynchronously and collect the results
+            var results = await Task.WhenAll(
+                _validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+            // aggregate failures from all validators into a single list
+            var failures = results
+                .Where(result => !result.IsValid)
+                .SelectMany(result => result.Errors)
+                .ToList();
+
+            if (failures.Count > 0)
+            {
+                // in case validation resulted in failures, return a result with the failures as errors
+                // an exception should *not* be thrown: we're doing flow control here, and validation failures
+                // are kind of expected (hence, not exceptional)
+                _logger.LogDebug("Validation resulted in {Count} failures", failures.Count);
+
+                // map the validation failures to validation errors, preserving the property and message
+                var errors = failures
+                    .ConvertAll(f => Error.Validation(f.PropertyName, f.ErrorMessage));
+
+                // use a dynamic cast, followed by casting to the response type
+                // this feels wrong, but otherwise reflection has to be used to call TResponse.From(errors)
+                return (dynamic)errors;
+            }
+
+            // validation passed, continue in the pipeline as usual
+            _logger.LogDebug("Validation passed successfully");
+        }
+        else
         {
             // in case no validators are found for the request type, just return out of the handler and
             // continue the pipeline
             _logger.LogDebug("No validators are available for request type");
-            return await next();
         }
 
-        _logger.LogDebug("Applying {Count} validators for request type", _validators.Count());
-
-        // create a new validation context scoped to this execution
-        var context = new ValidationContext<TRequest>(request);
-        // run all validators asynchronously and collect the results
-        var results = await Task.WhenAll(
-            _validators.Select(v => v.ValidateAsync(context, cancellationToken)));
-        // aggregate failures from all validators into a single list
-        var failures = results
-            .Where(result => !result.IsValid)
-            .SelectMany(result => result.Errors)
-            .ToList();
-
-        if (failures.Count != 0)
-        {
-            // in case validation resulted in failures, return a result with the failures as errors
-            // an exception should *not* be thrown: we're doing flow control here, and validation failures
-            // are kind of expected (hence, not exceptional)
-            _logger.LogDebug("Validation resulted in {Count} failures", failures.Count);
-            
-            // map the validation failures to validation errors, preserving the property and message
-            var errors = failures
-                .ConvertAll(f => Error.Validation(f.PropertyName, f.ErrorMessage));
-
-            // use a dynamic cast, followed by casting to the response type
-            // this feels wrong, but otherwise reflection has to be used to call TResponse.From(errors)
-            return (TResponse)(dynamic)errors;
-        }
-
-        // validation passed, continue in the pipeline as usual
-        _logger.LogDebug("Validation passed successfully");
         return await next();
     }
 }
