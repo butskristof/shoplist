@@ -4,6 +4,7 @@ using Shoplists.Application.Common.Authentication;
 using Shoplists.Application.Common.Constants;
 using Shoplists.Application.Common.Persistence;
 using Shoplists.Domain.Models;
+using Shoplists.Persistence.Common;
 
 namespace Shoplists.Persistence;
 
@@ -59,12 +60,16 @@ internal sealed class AppDbContext : DbContext, IAppDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-
         // the base method is empty, but retain the call to minimise impact if
         // it should be used in a future version
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.HasCollation(
+            PersistenceConstants.CaseInsensitiveCollation,
+            locale: "en-u-ks-primary",
+            provider: "icu",
+            deterministic: false
+        );
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
