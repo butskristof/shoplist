@@ -2,6 +2,7 @@ using System.Security.Authentication;
 using ErrorOr;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Shoplists.Application.Common.Authentication;
 using Shoplists.Application.Common.FluentValidation;
@@ -51,7 +52,16 @@ public static class CreateList
         {
             _logger.LogDebug("Creating a new List");
 
-            var owner = _authenticationInfo.UserId ?? throw new AuthenticationException("Could not determine user ID");
+            if (await _db
+                    .CurrentUserLists(false)
+                    // name should be configured with case-insensitive collation
+                    .AnyAsync(l => l.Name == request.Name, cancellationToken: cancellationToken))
+            {
+                return Error.Conflict(nameof(request.Name));
+            }
+
+            var owner = _authenticationInfo.UserId ??
+                        throw new AuthenticationException("Could not determine user ID");
             var list = new List { Name = request.Name, Owner = owner };
             _logger.LogDebug("Mapped request to entity");
 
