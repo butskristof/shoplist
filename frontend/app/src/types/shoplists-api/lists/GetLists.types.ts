@@ -1,8 +1,8 @@
 export interface GetListsResponse {
-  lists: List[];
+  lists: GetListsResponseList[];
 }
 
-export interface List {
+export interface GetListsResponseList {
   id: string;
   name: string;
   itemsCount: number;

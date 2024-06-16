@@ -34,6 +34,7 @@ const EditShoplist: FC<Props> = ({ onClose, shoplist }) => {
   //#endregion
 
   //#region form
+
   const {
     control,
     handleSubmit,
@@ -47,11 +48,10 @@ const EditShoplist: FC<Props> = ({ onClose, shoplist }) => {
   const isFormDisabled = mutation.isPending || mutation.isSuccess;
 
   const saveList: SubmitHandler<FormSchemaType> = (values: FormSchemaType) => {
-    let payload: CreateListRequest | UpdateListRequest = {
+    const payload: CreateListRequest | UpdateListRequest = {
       name: values.name,
     };
-    if (isEdit) payload = { ...payload, id: shoplist.id };
-    return mutation.mutate(payload);
+    return mutation.mutate({ payload, id: shoplist?.id });
   };
 
   //#endregion

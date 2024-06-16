@@ -24,8 +24,8 @@ export const ShoplistsApi = {
   createList: (payload: CreateListRequest) =>
     api.post<CreateListResponse>('/lists', payload).then((r) => r.data),
 
-  updateList: (payload: UpdateListRequest) =>
-    api.put<null>(`/lists/${payload.id}`, payload).then((r) => r.data),
+  updateList: (id: string, payload: UpdateListRequest) =>
+    api.put<null>(`/lists/${id}`, payload).then((r) => r.data),
 
   deleteList: (id: string): Promise<null> => api.delete<null>(`/lists/${id}`).then((r) => r.data),
 

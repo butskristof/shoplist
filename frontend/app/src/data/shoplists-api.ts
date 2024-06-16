@@ -8,6 +8,8 @@ import {
 } from '@/types/shoplists-api/listitems/CreateListItem.types.ts';
 import { UpdateListItemRequest } from '@/types/shoplists-api/listitems/UpdateListItem.types.ts';
 
+//#region lists
+
 export const useShoplistsApiGetLists = () =>
   useQuery({
     queryKey: ['lists'],
@@ -22,8 +24,13 @@ export const useShoplistsApiGetList = (id: string) =>
 
 export const useShoplistsApiUpsertList = (queryClient: QueryClient) =>
   useMutation({
-    mutationFn: (payload: CreateListRequest | UpdateListRequest) =>
-      'id' in payload ? ShoplistsApi.updateList(payload) : ShoplistsApi.createList(payload),
+    mutationFn: ({
+      payload,
+      id,
+    }: {
+      payload: CreateListRequest | UpdateListRequest;
+      id?: string;
+    }) => (id ? ShoplistsApi.updateList(id, payload) : ShoplistsApi.createList(payload)),
     onSuccess: () =>
       queryClient.invalidateQueries({
         queryKey: ['lists'], // TODO review
@@ -38,6 +45,10 @@ export const useShoplistsApiDeleteList = (queryClient: QueryClient) =>
         queryKey: ['lists'], // TODO review
       }),
   });
+
+//#endregion
+
+//#region list items
 
 export const useShoplistsApiUpsertItem = (queryClient: QueryClient) =>
   useMutation({
@@ -60,3 +71,5 @@ export const useShoplistsApiDeleteItem = (queryClient: QueryClient) =>
         queryKey: ['lists'], // TODO review
       }),
   });
+
+//#endregion

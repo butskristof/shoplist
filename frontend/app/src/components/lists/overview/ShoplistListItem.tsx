@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './ShoplistListItem.module.scss';
-import { List } from '@/types/shoplists-api/lists/GetLists.types.ts';
+import { List } from '@/components/lists/overview/ShoplistList.tsx';
 
 interface Props {
   list: List;
