@@ -11,11 +11,14 @@ namespace Shoplists.Application.Modules.ListItems;
 
 public static class CreateListItem
 {
-    public sealed record Request(Guid ListId, string Name) : IRequest<ErrorOr<Response>>;
+    public record Request(string Name);
+
+    public sealed record Command(Guid ListId, string Name)
+        : Request(Name), IRequest<ErrorOr<Response>>;
 
     public sealed record Response(Guid Id, string Name, bool Ticked, Guid ListId);
 
-    internal sealed class Validator : AbstractValidator<Request>
+    internal sealed class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
@@ -24,7 +27,7 @@ public static class CreateListItem
         }
     }
 
-    internal sealed class Handler : IRequestHandler<Request, ErrorOr<Response>>
+    internal sealed class Handler : IRequestHandler<Command, ErrorOr<Response>>
     {
         #region construction
 
@@ -39,7 +42,7 @@ public static class CreateListItem
 
         #endregion
 
-        public async Task<ErrorOr<Response>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Response>> Handle(Command command, CancellationToken cancellationToken)
         {
             _logger.LogDebug("Creating a new ListItem");
 
@@ -47,21 +50,22 @@ public static class CreateListItem
             var list = await _dbContext
                 .CurrentUserLists(true)
                 .Include(l => l.Items)
-                .SingleOrDefaultAsync(l => l.Id == request.ListId, cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(l => l.Id == command.ListId, cancellationToken: cancellationToken);
             if (list is null)
             {
                 _logger.LogDebug(
                     "Failed to fetch list with ID {ListId} from database: does not exist or does not belong to this user",
-                    request.ListId);
-                return Error.NotFound(nameof(request.ListId), $"Could not find List with id {request.ListId}");
+                    command.ListId);
+                return Error.NotFound(nameof(command.ListId), $"Could not find List with id {command.ListId}");
             }
+
             _logger.LogDebug("Fetched list to add to item to from database");
 
             var listItem = new ListItem
             {
-                Name = request.Name.Trim()
+                Name = command.Name.Trim()
             };
-            _logger.LogDebug("Mapped request to entity");
+            _logger.LogDebug("Mapped command to entity");
 
             list.Items.Add(listItem);
             await _dbContext.SaveChangesAsync(CancellationToken.None);
@@ -69,7 +73,7 @@ public static class CreateListItem
 
             var response = new Response(listItem.Id, listItem.Name, listItem.Ticked, listItem.ListId);
             _logger.LogDebug("Mapped entity to reponse DTO");
-            
+
             return response;
         }
     }

@@ -8,9 +8,9 @@ namespace Shoplists.Application.Modules.ListItems;
 
 public static class DeleteListItem
 {
-    public sealed record Request(Guid ListId, Guid ItemId) : IRequest<ErrorOr<Deleted>>;
+    public sealed record Command(Guid ListId, Guid ItemId) : IRequest<ErrorOr<Deleted>>;
 
-    internal sealed class Handler : IRequestHandler<Request, ErrorOr<Deleted>>
+    internal sealed class Handler : IRequestHandler<Command, ErrorOr<Deleted>>
     {
         #region construction
 
@@ -25,32 +25,34 @@ public static class DeleteListItem
 
         #endregion
 
-        public async Task<ErrorOr<Deleted>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Deleted>> Handle(Command command, CancellationToken cancellationToken)
         {
             _logger.LogDebug("Deleting a ListItem");
 
             var list = await _dbContext
                 .CurrentUserLists(true)
                 .Include(l => l.Items)
-                .SingleOrDefaultAsync(l => l.Id == request.ListId, cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(l => l.Id == command.ListId, cancellationToken: cancellationToken);
             if (list is null)
             {
                 _logger.LogDebug(
                     "Failed to fetch list with ID {ListId} from database: does not exist or does not belong to this user",
-                    request.ListId);
-                return Error.NotFound(nameof(request.ListId), $"Could not find List with id {request.ListId}");
+                    command.ListId);
+                return Error.NotFound(nameof(command.ListId), $"Could not find List with id {command.ListId}");
             }
+
             _logger.LogDebug("Fetched list and list items from database");
 
-            var listItem = list.Items.SingleOrDefault(i => i.Id == request.ItemId);
+            var listItem = list.Items.SingleOrDefault(i => i.Id == command.ItemId);
             if (listItem is null)
             {
                 _logger
                     .LogDebug(
                         "Failed to retrieve ListItem with ID {ListItemId}: does not exist in this List",
-                        request.ItemId);
-                return Error.NotFound(nameof(request.ItemId), $"Could not find ListItem with id {request.ItemId}");
+                        command.ItemId);
+                return Error.NotFound(nameof(command.ItemId), $"Could not find ListItem with id {command.ItemId}");
             }
+
             _logger.LogDebug("Retrieved list item to delete from entity");
 
             list.Items.Remove(listItem);
