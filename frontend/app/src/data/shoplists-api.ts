@@ -1,6 +1,12 @@
 import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { ShoplistsApi } from '@/services/shoplists-api.ts';
-import { Shoplist, ShoplistItem } from '@/types/shoplists-api.types.ts';
+import { CreateListRequest } from '@/types/shoplists-api/lists/CreateList.types.ts';
+import { UpdateListRequest } from '@/types/shoplists-api/lists/UpdateList.types.ts';
+import {
+  CreateListItemRequest,
+  CreateListItemResponse,
+} from '@/types/shoplists-api/listitems/CreateListItem.types.ts';
+import { UpdateListItemRequest } from '@/types/shoplists-api/listitems/UpdateListItem.types.ts';
 
 export const useShoplistsApiGetLists = () =>
   useQuery({
@@ -14,10 +20,10 @@ export const useShoplistsApiGetList = (id: string) =>
     queryFn: () => ShoplistsApi.getList(id),
   });
 
-export const useShoplistsApiUpsertList = (queryClient: QueryClient, isEdit: boolean) =>
+export const useShoplistsApiUpsertList = (queryClient: QueryClient) =>
   useMutation({
-    mutationFn: (payload: Shoplist) =>
-      isEdit ? ShoplistsApi.updateList(payload) : ShoplistsApi.createList(payload),
+    mutationFn: (payload: CreateListRequest | UpdateListRequest) =>
+      'id' in payload ? ShoplistsApi.updateList(payload) : ShoplistsApi.createList(payload),
     onSuccess: () =>
       queryClient.invalidateQueries({
         queryKey: ['lists'], // TODO review
@@ -33,13 +39,16 @@ export const useShoplistsApiDeleteList = (queryClient: QueryClient) =>
       }),
   });
 
-export const useShoplistsApiUpsertItem = (queryClient: QueryClient, isEdit: boolean) =>
+export const useShoplistsApiUpsertItem = (queryClient: QueryClient) =>
   useMutation({
-    mutationFn: (payload: ShoplistItem) =>
-      isEdit ? ShoplistsApi.updateItem(payload) : ShoplistsApi.createItem(payload),
-    onSuccess: (response: ShoplistItem) =>
+    mutationFn: (payload: CreateListItemRequest | UpdateListItemRequest) =>
+      'id' in payload ? ShoplistsApi.updateItem(payload) : ShoplistsApi.createItem(payload),
+    onSuccess: (
+      _response: CreateListItemResponse | null,
+      request: CreateListItemRequest | UpdateListItemRequest,
+    ) =>
       queryClient.invalidateQueries({
-        queryKey: ['lists', response.listId],
+        queryKey: ['lists', request.listId],
       }),
   });
 

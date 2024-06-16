@@ -29,7 +29,7 @@ const ListsPage = () => {
         }
       />
 
-      <ShoplistList lists={query.data ?? []} />
+      <ShoplistList lists={query.data?.lists ?? []} />
 
       {showCreate && <EditShoplist onClose={() => setShowCreate(false)} />}
     </EntityQuery>

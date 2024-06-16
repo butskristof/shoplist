@@ -2,27 +2,32 @@ import { ChangeEvent, FC } from 'react';
 import { ActionIcon, Checkbox, MantineProvider } from '@mantine/core';
 import { useQueryClient } from '@tanstack/react-query';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
-import { ShoplistItem as ShoplistItemModel } from '@/types/shoplists-api.types.ts';
 import { useShoplistsApiUpsertItem } from '@/data/shoplists-api.ts';
 import AppCard from '@/components/common/AppCard.tsx';
 import classes from './ShoplistItem.module.scss';
+import { ListItem } from '@/types/shoplists-api/lists/GetList.types.ts';
+import { UpdateListItemRequest } from '@/types/shoplists-api/listitems/UpdateListItem.types.ts';
 
 interface Props {
-  item: ShoplistItemModel;
+  listId: string;
+  item: ListItem;
   onEdit: () => void;
   onDelete: () => void;
 }
 
-const ShoplistItem: FC<Props> = ({ item, onEdit, onDelete }) => {
+const ShoplistItem: FC<Props> = ({ listId, item, onEdit, onDelete }) => {
   const queryClient = useQueryClient();
-  const mutation = useShoplistsApiUpsertItem(queryClient, true);
+  const mutation = useShoplistsApiUpsertItem(queryClient);
   // TODO optimistic update?
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
-    mutation.mutate({
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const payload: UpdateListItemRequest = {
       ...item,
       ticked: event.target.checked,
-    });
+      listId,
+    };
+    mutation.mutate(payload);
+  };
 
   return (
     <AppCard>

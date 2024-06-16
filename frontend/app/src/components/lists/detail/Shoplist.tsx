@@ -1,15 +1,15 @@
 import { FC, useState } from 'react';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
-import { ShoplistWithItems } from '@/types/shoplists-api.types.ts';
 import LeftRightHeader from '@/components/common/LeftRightHeader.tsx';
 import IconButton from '@/components/common/IconButton.tsx';
 import ShoplistItems from '@/components/lists/detail/ShoplistItems.tsx';
 import DeleteShoplist from '@/components/lists/detail/DeleteShoplist.tsx';
 import EditShoplist from '@/components/lists/common/EditShoplist.tsx';
+import { GetListResponse } from '@/types/shoplists-api/lists/GetList.types.ts';
 
 interface Props {
-  list: ShoplistWithItems;
+  list: GetListResponse;
 }
 
 const Shoplist: FC<Props> = ({ list }) => {

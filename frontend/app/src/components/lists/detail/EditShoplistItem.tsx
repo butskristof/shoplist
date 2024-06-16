@@ -5,11 +5,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useQueryClient } from '@tanstack/react-query';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { TextInput } from 'react-hook-form-mantine';
-import { ShoplistItem } from '@/types/shoplists-api.types.ts';
 import { useShoplistsApiUpsertItem } from '@/data/shoplists-api.ts';
 import IconButton from '@/components/common/IconButton.tsx';
 import MutationResult from '@/components/common/MutationResult.tsx';
 import EditModal from '@/components/common/modals/EditModal.tsx';
+import { CreateListItemRequest } from '@/types/shoplists-api/listitems/CreateListItem.types.ts';
+import { UpdateListItemRequest } from '@/types/shoplists-api/listitems/UpdateListItem.types.ts';
+import { ListItem } from '@/types/shoplists-api/lists/GetList.types.ts';
 
 const schema = yup.object({
   name: yup.string().trim().required().label('Name'),
@@ -19,7 +21,7 @@ type FormSchemaType = yup.InferType<typeof schema>;
 interface Props {
   listId: string;
   onClose: () => void;
-  shoplistItem?: ShoplistItem;
+  shoplistItem?: ListItem;
 }
 
 const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
@@ -28,7 +30,7 @@ const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
   //#region mutation
 
   const queryClient = useQueryClient();
-  const mutation = useShoplistsApiUpsertItem(queryClient, isEdit);
+  const mutation = useShoplistsApiUpsertItem(queryClient);
 
   //#endregion
 
@@ -47,12 +49,11 @@ const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
   const isFormDisabled = mutation.isPending || mutation.isSuccess;
 
   const saveItem: SubmitHandler<FormSchemaType> = (values: FormSchemaType) => {
-    const payload: ShoplistItem = {
+    let payload: CreateListItemRequest | UpdateListItemRequest = {
       name: values.name,
-      id: isEdit ? shoplistItem.id : crypto.randomUUID(),
-      ticked: false,
       listId,
     };
+    if (isEdit) payload = { ...payload, id: shoplistItem.id };
     return mutation.mutate(payload);
   };
 

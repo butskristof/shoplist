@@ -5,11 +5,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { TextInput } from 'react-hook-form-mantine';
-import { Shoplist } from '@/types/shoplists-api.types.ts';
 import EditModal from '@/components/common/modals/EditModal.tsx';
 import { useShoplistsApiUpsertList } from '@/data/shoplists-api.ts';
 import MutationResult from '@/components/common/MutationResult.tsx';
 import IconButton from '@/components/common/IconButton.tsx';
+import { GetListResponse } from '@/types/shoplists-api/lists/GetList.types.ts';
+import { CreateListRequest } from '@/types/shoplists-api/lists/CreateList.types.ts';
+import { UpdateListRequest } from '@/types/shoplists-api/lists/UpdateList.types.ts';
 
 const schema = yup.object({
   name: yup.string().trim().required().label('Name'),
@@ -18,7 +20,7 @@ type FormSchemaType = yup.InferType<typeof schema>;
 
 interface Props {
   onClose: () => void;
-  shoplist?: Shoplist;
+  shoplist?: GetListResponse;
 }
 
 const EditShoplist: FC<Props> = ({ onClose, shoplist }) => {
@@ -27,7 +29,7 @@ const EditShoplist: FC<Props> = ({ onClose, shoplist }) => {
   //#region mutation
 
   const queryClient = useQueryClient();
-  const mutation = useShoplistsApiUpsertList(queryClient, isEdit);
+  const mutation = useShoplistsApiUpsertList(queryClient);
 
   //#endregion
 
@@ -45,10 +47,10 @@ const EditShoplist: FC<Props> = ({ onClose, shoplist }) => {
   const isFormDisabled = mutation.isPending || mutation.isSuccess;
 
   const saveList: SubmitHandler<FormSchemaType> = (values: FormSchemaType) => {
-    const payload: Shoplist = {
+    let payload: CreateListRequest | UpdateListRequest = {
       name: values.name,
-      id: isEdit ? shoplist.id : crypto.randomUUID(),
     };
+    if (isEdit) payload = { ...payload, id: shoplist.id };
     return mutation.mutate(payload);
   };
 

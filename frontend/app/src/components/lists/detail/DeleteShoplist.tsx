@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { notifications } from '@mantine/notifications';
-import { Shoplist } from '@/types/shoplists-api.types.ts';
 import { useShoplistsApiDeleteList } from '@/data/shoplists-api.ts';
 import DeleteModal from '@/components/common/modals/DeleteModal.tsx';
+import { GetListResponse } from '@/types/shoplists-api/lists/GetList.types.ts';
 
 interface Props {
-  list: Shoplist;
+  list: GetListResponse;
   onClose: (deleted: boolean) => void;
 }
 
