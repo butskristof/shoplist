@@ -1,0 +1,12 @@
+@listId=
+@itemId=
+
+PUT {{BASE_URL}}/lists/{{listId}}/items/{{itemId}}
+Authorization: Bearer {{ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+    "id": "{{itemId}}",
+    "name": "updated item",
+    "ticked": false,
+}

@@ -1,0 +1,10 @@
+@listId=
+
+POST {{BASE_URL}}/lists/{{listId}}/items
+Authorization: Bearer {{ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+    "listId": "{{listId}}",
+    "name": "new item"
+}

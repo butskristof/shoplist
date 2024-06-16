@@ -1,0 +1,5 @@
+@listId=
+@itemId=
+
+DELETE {{BASE_URL}}/lists/{{listId}}/items/{{itemId}}
+Authorization: Bearer {{ACCESS_TOKEN}}

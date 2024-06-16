@@ -7,7 +7,7 @@ namespace Shoplists.Api.Modules;
 
 internal static class Lists
 {
-    private const string GroupName = "Lists";
+    internal const string GroupName = "Lists";
 
     internal static void MapListsEndpoints(this IEndpointRouteBuilder endpoints)
     {
