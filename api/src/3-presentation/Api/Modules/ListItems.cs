@@ -9,7 +9,7 @@ internal static class ListItems
 {
     internal const string GroupName = "Items";
 
-    internal static void MapListItemsEndpoints(this IEndpointRouteBuilder endpoints)
+    internal static IEndpointRouteBuilder MapListItemsEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var group = endpoints
             .MapGroup($"/{Lists.GroupName}/{{ListId:guid}}/{GroupName}")
@@ -35,6 +35,8 @@ internal static class ListItems
             .WithName(nameof(DeleteListItem))
             .ProducesNoContent()
             .ProducesNotFound();
+
+        return endpoints;
     }
 
     private static Task<IResult> CreateListItem([FromBody] CreateListItem.Request request, ISender sender)
@@ -45,7 +47,7 @@ internal static class ListItems
         => sender.Send(request)
             .MapToNoContentOrProblem();
 
-    private static Task<IResult> DeleteListItem([FromRoute] DeleteListItem.Request request, ISender sender)
+    private static Task<IResult> DeleteListItem([AsParameters] DeleteListItem.Request request, ISender sender)
         => sender.Send(request)
             .MapToNoContentOrProblem();
 }

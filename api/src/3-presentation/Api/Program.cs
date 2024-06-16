@@ -36,6 +36,7 @@ app
     .MapSwagger()
     .RequireAuthorization();
 app
-    .MapListsEndpoints();
+    .MapListsEndpoints()
+    .MapListItemsEndpoints();
 
 app.Run();

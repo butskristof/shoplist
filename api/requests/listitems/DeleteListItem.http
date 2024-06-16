@@ -1,5 +1,5 @@
-@listId=
-@itemId=
+@listId=dd2aac79-af58-4821-8b02-352632d34615
+@itemId=d380b171-2ffd-4d9a-aaaa-da45442cde54
 
 DELETE {{BASE_URL}}/lists/{{listId}}/items/{{itemId}}
 Authorization: Bearer {{ACCESS_TOKEN}}
