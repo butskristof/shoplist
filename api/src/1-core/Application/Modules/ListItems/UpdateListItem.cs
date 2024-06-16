@@ -10,14 +10,25 @@ namespace Shoplists.Application.Modules.ListItems;
 
 public static class UpdateListItem
 {
-    public sealed record Request(
-        Guid Id,
+    public record Request(
         string Name,
-        bool Ticked,
-        Guid ListId
-    ) : IRequest<ErrorOr<Updated>>;
+        bool Ticked
+    );
 
-    internal sealed class Validator : AbstractValidator<Request>
+    public sealed record Command(
+        Guid Id,
+        Guid ListId,
+        string Name,
+        bool Ticked
+    ) : Request(Name, Ticked), IRequest<ErrorOr<Updated>>
+    {
+        public Command(Guid Id, Guid ListId, Request request)
+            : this(Id, ListId, request.Name, request.Ticked)
+        {
+        }
+    }
+
+    internal sealed class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
@@ -26,7 +37,7 @@ public static class UpdateListItem
         }
     }
 
-    internal sealed class Handler : IRequestHandler<Request, ErrorOr<Updated>>
+    internal sealed class Handler : IRequestHandler<Command, ErrorOr<Updated>>
     {
         #region construction
 
@@ -41,36 +52,38 @@ public static class UpdateListItem
 
         #endregion
 
-        public async Task<ErrorOr<Updated>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Updated>> Handle(Command command, CancellationToken cancellationToken)
         {
             _logger.LogDebug("Updating a ListItem");
-            
+
             var list = await _dbContext
                 .CurrentUserLists(true)
                 .Include(l => l.Items)
-                .SingleOrDefaultAsync(l => l.Id == request.ListId, cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(l => l.Id == command.ListId, cancellationToken: cancellationToken);
             if (list is null)
             {
                 _logger.LogDebug(
                     "Failed to fetch list with ID {ListId} from database: does not exist or does not belong to this user",
-                    request.ListId);
-                return Error.NotFound(nameof(request.ListId), $"Could not find List with id {request.ListId}");
+                    command.ListId);
+                return Error.NotFound(nameof(command.ListId), $"Could not find List with id {command.ListId}");
             }
+
             _logger.LogDebug("Fetched list and list items from database");
 
-            var listItem = list.Items.SingleOrDefault(i => i.Id == request.Id);
+            var listItem = list.Items.SingleOrDefault(i => i.Id == command.Id);
             if (listItem is null)
             {
                 _logger
                     .LogDebug(
                         "Failed to retrieve ListItem with ID {ListItemId}: does not exist in this List",
-                        request.Id);
-                return Error.NotFound(nameof(request.Id), $"Could not find ListItem with id {request.Id}");
+                        command.Id);
+                return Error.NotFound(nameof(command.Id), $"Could not find ListItem with id {command.Id}");
             }
+
             _logger.LogDebug("Retrieved list item to delete from entity");
 
-            listItem.Name = request.Name.Trim();
-            listItem.Ticked = request.Ticked;
+            listItem.Name = command.Name.Trim();
+            listItem.Ticked = command.Ticked;
             _logger.LogDebug("Applied changes from request to entity");
 
             await _dbContext.SaveChangesAsync(CancellationToken.None);

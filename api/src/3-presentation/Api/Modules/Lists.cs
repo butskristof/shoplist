@@ -49,23 +49,38 @@ internal static class Lists
         return endpoints;
     }
 
-    private static Task<IResult> GetLists([FromServices] ISender sender)
-        => sender.Send(new GetLists.Request())
+    private static Task<IResult> GetLists(
+        [FromServices] ISender sender
+    )
+        => sender.Send(new GetLists.Query())
             .MapToOkOrProblem();
 
-    private static Task<IResult> GetList([FromRoute] Guid id, [FromServices] ISender sender)
-        => sender.Send(new GetList.Request(id))
+    private static Task<IResult> GetList(
+        [FromRoute] Guid id,
+        [FromServices] ISender sender
+    )
+        => sender.Send(new GetList.Query(id))
             .MapToOkOrProblem();
 
-    private static Task<IResult> CreateList([FromBody] CreateList.Request request, ISender sender)
-        => sender.Send(request)
+    private static Task<IResult> CreateList(
+        [FromBody] CreateList.Request request,
+        [FromServices] ISender sender
+    )
+        => sender.Send(new CreateList.Command(request))
             .MapToCreatedOrProblem(response => $"/{GroupName}/{response.Id}");
 
-    private static Task<IResult> UpdateList([FromRoute] Guid id, [FromBody] UpdateList.Request request, ISender sender)
-        => sender.Send(request)
+    private static Task<IResult> UpdateList(
+        [FromRoute] Guid id,
+        [FromBody] UpdateList.Request request,
+        [FromServices] ISender sender
+    )
+        => sender.Send(new UpdateList.Command(id, request))
             .MapToNoContentOrProblem();
 
-    private static Task<IResult> DeleteList([FromRoute] Guid id, ISender sender)
-        => sender.Send(new DeleteList.Request(id))
+    private static Task<IResult> DeleteList(
+        [FromRoute] Guid id,
+        [FromServices] ISender sender
+    )
+        => sender.Send(new DeleteList.Command(id))
             .MapToNoContentOrProblem();
 }

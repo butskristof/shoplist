@@ -8,7 +8,7 @@ namespace Shoplists.Application.Modules.Lists;
 
 public static class GetList
 {
-    public sealed record Request(Guid Id) : IRequest<ErrorOr<Response>>;
+    public sealed record Query(Guid Id) : IRequest<ErrorOr<Response>>;
 
     public sealed record Response(
         Guid Id,
@@ -22,7 +22,7 @@ public static class GetList
         bool Ticked
     );
 
-    internal sealed class Handler : IRequestHandler<Request, ErrorOr<Response>>
+    internal sealed class Handler : IRequestHandler<Query, ErrorOr<Response>>
     {
         #region construction
 
@@ -37,20 +37,20 @@ public static class GetList
 
         #endregion
 
-        public async Task<ErrorOr<Response>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Response>> Handle(Query query, CancellationToken cancellationToken)
         {
             _logger.LogDebug("Fetching a List");
 
             var list = await _dbContext
                 .CurrentUserLists(false)
                 .Include(l => l.Items)
-                .SingleOrDefaultAsync(l => l.Id == request.Id, cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(l => l.Id == query.Id, cancellationToken: cancellationToken);
             if (list is null)
             {
                 _logger.LogDebug(
                     "Failed to fetch list with ID {Id} from database: does not exist or does not belong to this user",
-                    request.Id);
-                return Error.NotFound(nameof(request.Id), $"Could not find List with id {request.Id}");
+                    query.Id);
+                return Error.NotFound(nameof(query.Id), $"Could not find List with id {query.Id}");
             }
 
             _logger.LogDebug("Fetched entity from database");

@@ -1,10 +1,15 @@
 import { FC } from 'react';
-import { Shoplist } from '@/types/shoplists-api.types.ts';
 import ShoplistListItem from '@/components/lists/overview/ShoplistListItem.tsx';
 import classes from './ShoplistList.module.scss';
 
+export interface List {
+  id: string;
+  name: string;
+  itemsCount: number;
+}
+
 interface Props {
-  lists: Shoplist[];
+  lists: List[];
 }
 
 const ShoplistList: FC<Props> = ({ lists }) => {

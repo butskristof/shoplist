@@ -5,33 +5,40 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { TextInput } from 'react-hook-form-mantine';
-import { Shoplist } from '@/types/shoplists-api.types.ts';
 import EditModal from '@/components/common/modals/EditModal.tsx';
 import { useShoplistsApiUpsertList } from '@/data/shoplists-api.ts';
 import MutationResult from '@/components/common/MutationResult.tsx';
 import IconButton from '@/components/common/IconButton.tsx';
+import { CreateListRequest } from '@/types/shoplists-api/lists/CreateList.types.ts';
+import { UpdateListRequest } from '@/types/shoplists-api/lists/UpdateList.types.ts';
 
 const schema = yup.object({
   name: yup.string().trim().required().label('Name'),
 });
 type FormSchemaType = yup.InferType<typeof schema>;
 
-interface Props {
-  onClose: () => void;
-  shoplist?: Shoplist;
+interface List {
+  id: string;
+  name: string;
 }
 
-const EditShoplist: FC<Props> = ({ onClose, shoplist }) => {
-  const isEdit = shoplist != null;
+interface Props {
+  onClose: () => void;
+  list?: List;
+}
+
+const EditShoplist: FC<Props> = ({ onClose, list }) => {
+  const isEdit = list != null;
 
   //#region mutation
 
   const queryClient = useQueryClient();
-  const mutation = useShoplistsApiUpsertList(queryClient, isEdit);
+  const mutation = useShoplistsApiUpsertList(queryClient);
 
   //#endregion
 
   //#region form
+
   const {
     control,
     handleSubmit,
@@ -39,17 +46,16 @@ const EditShoplist: FC<Props> = ({ onClose, shoplist }) => {
   } = useForm<FormSchemaType>({
     resolver: yupResolver(schema),
     defaultValues: {
-      name: shoplist?.name ?? '',
+      name: list?.name ?? '',
     },
   });
   const isFormDisabled = mutation.isPending || mutation.isSuccess;
 
   const saveList: SubmitHandler<FormSchemaType> = (values: FormSchemaType) => {
-    const payload: Shoplist = {
+    const payload: CreateListRequest | UpdateListRequest = {
       name: values.name,
-      id: isEdit ? shoplist.id : crypto.randomUUID(),
     };
-    return mutation.mutate(payload);
+    return mutation.mutate({ payload, id: list?.id });
   };
 
   //#endregion

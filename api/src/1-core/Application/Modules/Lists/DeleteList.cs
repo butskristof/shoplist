@@ -8,9 +8,9 @@ namespace Shoplists.Application.Modules.Lists;
 
 public static class DeleteList
 {
-    public sealed record Request(Guid Id) : IRequest<ErrorOr<Deleted>>;
+    public sealed record Command(Guid Id) : IRequest<ErrorOr<Deleted>>;
 
-    internal sealed class Handler : IRequestHandler<Request, ErrorOr<Deleted>>
+    internal sealed class Handler : IRequestHandler<Command, ErrorOr<Deleted>>
     {
         #region construction
 
@@ -25,19 +25,19 @@ public static class DeleteList
 
         #endregion
 
-        public async Task<ErrorOr<Deleted>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Deleted>> Handle(Command command, CancellationToken cancellationToken)
         {
             _logger.LogDebug("Deleting a List");
 
             var list = await _dbContext
                 .CurrentUserLists(true)
-                .SingleOrDefaultAsync(l => l.Id == request.Id, cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(l => l.Id == command.Id, cancellationToken: cancellationToken);
             if (list is null)
             {
                 _logger.LogDebug(
                     "Failed to fetch list with ID {Id} from database: does not exist or does not belong to this user",
-                    request.Id);
-                return Error.NotFound(nameof(request.Id), $"Could not find List with id {request.Id}");
+                    command.Id);
+                return Error.NotFound(nameof(command.Id), $"Could not find List with id {command.Id}");
             }
 
             _logger.LogDebug("Fetched entity to delete from database");

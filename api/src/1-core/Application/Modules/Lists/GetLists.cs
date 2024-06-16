@@ -8,7 +8,7 @@ namespace Shoplists.Application.Modules.Lists;
 
 public static class GetLists
 {
-    public sealed record Request : IRequest<ErrorOr<Response>>;
+    public sealed record Query : IRequest<ErrorOr<Response>>;
 
     public sealed record Response
     {
@@ -22,7 +22,7 @@ public static class GetLists
         public sealed record List(Guid Id, string Name, int ItemsCount);
     }
 
-    internal sealed class Handler : IRequestHandler<Request, ErrorOr<Response>>
+    internal sealed class Handler : IRequestHandler<Query, ErrorOr<Response>>
     {
         #region construction
 
@@ -37,7 +37,7 @@ public static class GetLists
 
         #endregion
 
-        public async Task<ErrorOr<Response>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Response>> Handle(Query query, CancellationToken cancellationToken)
         {
             _logger.LogDebug("Fetching Lists for current user");
 

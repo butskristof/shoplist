@@ -5,11 +5,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useQueryClient } from '@tanstack/react-query';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { TextInput } from 'react-hook-form-mantine';
-import { ShoplistItem } from '@/types/shoplists-api.types.ts';
 import { useShoplistsApiUpsertItem } from '@/data/shoplists-api.ts';
 import IconButton from '@/components/common/IconButton.tsx';
 import MutationResult from '@/components/common/MutationResult.tsx';
 import EditModal from '@/components/common/modals/EditModal.tsx';
+import { ListItem } from '@/components/lists/detail/Shoplist.tsx';
 
 const schema = yup.object({
   name: yup.string().trim().required().label('Name'),
@@ -19,16 +19,16 @@ type FormSchemaType = yup.InferType<typeof schema>;
 interface Props {
   listId: string;
   onClose: () => void;
-  shoplistItem?: ShoplistItem;
+  item?: ListItem;
 }
 
-const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
-  const isEdit = shoplistItem != null;
+const EditShoplistItem: FC<Props> = ({ listId, onClose, item }) => {
+  const isEdit = item != null;
 
   //#region mutation
 
   const queryClient = useQueryClient();
-  const mutation = useShoplistsApiUpsertItem(queryClient, isEdit);
+  const mutation = useShoplistsApiUpsertItem(queryClient);
 
   //#endregion
 
@@ -41,20 +41,20 @@ const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
   } = useForm<FormSchemaType>({
     resolver: yupResolver(schema),
     defaultValues: {
-      name: shoplistItem?.name ?? '',
+      name: item?.name ?? '',
     },
   });
   const isFormDisabled = mutation.isPending || mutation.isSuccess;
 
-  const saveItem: SubmitHandler<FormSchemaType> = (values: FormSchemaType) => {
-    const payload: ShoplistItem = {
-      name: values.name,
-      id: isEdit ? shoplistItem.id : crypto.randomUUID(),
-      ticked: false,
+  const saveItem: SubmitHandler<FormSchemaType> = (values: FormSchemaType) =>
+    mutation.mutate({
+      id: isEdit ? item?.id : undefined,
       listId,
-    };
-    return mutation.mutate(payload);
-  };
+      payload: {
+        name: values.name,
+        ticked: isEdit ? item?.ticked : undefined,
+      },
+    });
 
   //#endregion
 

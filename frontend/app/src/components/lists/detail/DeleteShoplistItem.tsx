@@ -2,20 +2,21 @@ import { FC } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { notifications } from '@mantine/notifications';
 import DeleteModal from '@/components/common/modals/DeleteModal.tsx';
-import { ShoplistItem } from '@/types/shoplists-api.types.ts';
 import { useShoplistsApiDeleteItem } from '@/data/shoplists-api.ts';
+import { ListItem } from '@/components/lists/detail/Shoplist.tsx';
 
 interface Props {
-  item: ShoplistItem;
+  item: ListItem;
+  listId: string;
   onClose: () => void;
 }
 
-const DeleteShoplistItem: FC<Props> = ({ onClose, item }) => {
+const DeleteShoplistItem: FC<Props> = ({ onClose, item, listId }) => {
   const queryClient = useQueryClient();
   const mutation = useShoplistsApiDeleteItem(queryClient);
 
   const handleDelete = async () => {
-    await mutation.mutateAsync(item.id);
+    await mutation.mutateAsync({ id: item.id, listId });
     notifications.show({ message: 'List item deleted', color: 'green' });
     onClose();
   };

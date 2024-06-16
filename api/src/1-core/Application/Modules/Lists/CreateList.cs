@@ -13,16 +13,24 @@ namespace Shoplists.Application.Modules.Lists;
 
 public static class CreateList
 {
-    public sealed record Request(
+    public record Request(string Name);
+
+    public sealed record Command(
         string Name
-    ) : IRequest<ErrorOr<Response>>;
+    ) : Request(Name), IRequest<ErrorOr<Response>>
+    {
+        public Command(Request request)
+            : this(request.Name)
+        {
+        }
+    }
 
     public sealed record Response(
         Guid Id,
         string Name
     );
 
-    internal sealed class Validator : AbstractValidator<Request>
+    internal sealed class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
@@ -32,7 +40,7 @@ public static class CreateList
         }
     }
 
-    internal sealed class Handler : IRequestHandler<Request, ErrorOr<Response>>
+    internal sealed class Handler : IRequestHandler<Command, ErrorOr<Response>>
     {
         #region construction
 
@@ -49,21 +57,21 @@ public static class CreateList
 
         #endregion
 
-        public async Task<ErrorOr<Response>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Response>> Handle(Command command, CancellationToken cancellationToken)
         {
             _logger.LogDebug("Creating a new List");
 
             if (await _dbContext
                     .CurrentUserLists(false)
                     // name should be configured with case-insensitive collation
-                    .AnyAsync(l => l.Name == request.Name, cancellationToken: cancellationToken))
+                    .AnyAsync(l => l.Name == command.Name, cancellationToken: cancellationToken))
             {
-                return Error.Conflict(nameof(request.Name));
+                return Error.Conflict(nameof(command.Name));
             }
 
             var owner = _authenticationInfo.UserId ??
                         throw new AuthenticationException("Could not determine user ID");
-            var list = new List { Name = request.Name, Owner = owner };
+            var list = new List { Name = command.Name, Owner = owner };
             _logger.LogDebug("Mapped request to entity");
 
             _dbContext.Lists.Add(list);
