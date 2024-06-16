@@ -9,4 +9,5 @@ Content-Type: application/json
     "id": "{{itemId}}",
     "name": "updated item",
     "ticked": true,
+    "listId": "{{listId}}"
 }
