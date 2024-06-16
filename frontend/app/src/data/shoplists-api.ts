@@ -50,14 +50,18 @@ export const useShoplistsApiDeleteList = (queryClient: QueryClient) =>
 
 //#region list items
 
+interface UpsertListItem {
+  id?: string;
+  listId: string;
+  payload: CreateListItemRequest | UpdateListItemRequest;
+}
 export const useShoplistsApiUpsertItem = (queryClient: QueryClient) =>
   useMutation({
-    mutationFn: (payload: CreateListItemRequest | UpdateListItemRequest) =>
-      'id' in payload ? ShoplistsApi.updateItem(payload) : ShoplistsApi.createItem(payload),
-    onSuccess: (
-      _response: CreateListItemResponse | null,
-      request: CreateListItemRequest | UpdateListItemRequest,
-    ) =>
+    mutationFn: ({ id, listId, payload }: UpsertListItem) =>
+      id
+        ? ShoplistsApi.updateItem(id, listId, payload as UpdateListItemRequest)
+        : ShoplistsApi.createItem(listId, payload),
+    onSuccess: (_response: CreateListItemResponse | null, request: UpsertListItem) =>
       queryClient.invalidateQueries({
         queryKey: ['lists', request.listId],
       }),
@@ -65,7 +69,8 @@ export const useShoplistsApiUpsertItem = (queryClient: QueryClient) =>
 
 export const useShoplistsApiDeleteItem = (queryClient: QueryClient) =>
   useMutation({
-    mutationFn: (id: string) => ShoplistsApi.deleteItem(id),
+    mutationFn: ({ id, listId }: { id: string; listId: string }) =>
+      ShoplistsApi.deleteItem(id, listId),
     onSuccess: () =>
       queryClient.invalidateQueries({
         queryKey: ['lists'], // TODO review

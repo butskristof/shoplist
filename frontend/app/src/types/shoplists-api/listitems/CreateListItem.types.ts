@@ -1,6 +1,5 @@
 export interface CreateListItemRequest {
   name: string;
-  listId: string;
 }
 
 export interface CreateListItemResponse {

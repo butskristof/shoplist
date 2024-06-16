@@ -9,7 +9,6 @@ import EditModal from '@/components/common/modals/EditModal.tsx';
 import { useShoplistsApiUpsertList } from '@/data/shoplists-api.ts';
 import MutationResult from '@/components/common/MutationResult.tsx';
 import IconButton from '@/components/common/IconButton.tsx';
-import { GetListResponse } from '@/types/shoplists-api/lists/GetList.types.ts';
 import { CreateListRequest } from '@/types/shoplists-api/lists/CreateList.types.ts';
 import { UpdateListRequest } from '@/types/shoplists-api/lists/UpdateList.types.ts';
 
@@ -18,13 +17,18 @@ const schema = yup.object({
 });
 type FormSchemaType = yup.InferType<typeof schema>;
 
-interface Props {
-  onClose: () => void;
-  shoplist?: GetListResponse;
+interface List {
+  id: string;
+  name: string;
 }
 
-const EditShoplist: FC<Props> = ({ onClose, shoplist }) => {
-  const isEdit = shoplist != null;
+interface Props {
+  onClose: () => void;
+  list?: List;
+}
+
+const EditShoplist: FC<Props> = ({ onClose, list }) => {
+  const isEdit = list != null;
 
   //#region mutation
 
@@ -42,7 +46,7 @@ const EditShoplist: FC<Props> = ({ onClose, shoplist }) => {
   } = useForm<FormSchemaType>({
     resolver: yupResolver(schema),
     defaultValues: {
-      name: shoplist?.name ?? '',
+      name: list?.name ?? '',
     },
   });
   const isFormDisabled = mutation.isPending || mutation.isSuccess;
@@ -51,7 +55,7 @@ const EditShoplist: FC<Props> = ({ onClose, shoplist }) => {
     const payload: CreateListRequest | UpdateListRequest = {
       name: values.name,
     };
-    return mutation.mutate({ payload, id: shoplist?.id });
+    return mutation.mutate({ payload, id: list?.id });
   };
 
   //#endregion

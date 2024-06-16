@@ -9,9 +9,7 @@ import { useShoplistsApiUpsertItem } from '@/data/shoplists-api.ts';
 import IconButton from '@/components/common/IconButton.tsx';
 import MutationResult from '@/components/common/MutationResult.tsx';
 import EditModal from '@/components/common/modals/EditModal.tsx';
-import { CreateListItemRequest } from '@/types/shoplists-api/listitems/CreateListItem.types.ts';
-import { UpdateListItemRequest } from '@/types/shoplists-api/listitems/UpdateListItem.types.ts';
-import { ListItem } from '@/types/shoplists-api/lists/GetList.types.ts';
+import { ListItem } from '@/components/lists/detail/Shoplist.tsx';
 
 const schema = yup.object({
   name: yup.string().trim().required().label('Name'),
@@ -48,14 +46,15 @@ const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
   });
   const isFormDisabled = mutation.isPending || mutation.isSuccess;
 
-  const saveItem: SubmitHandler<FormSchemaType> = (values: FormSchemaType) => {
-    let payload: CreateListItemRequest | UpdateListItemRequest = {
-      name: values.name,
+  const saveItem: SubmitHandler<FormSchemaType> = (values: FormSchemaType) =>
+    mutation.mutate({
+      id: isEdit ? shoplistItem?.id : undefined,
       listId,
-    };
-    if (isEdit) payload = { ...payload, id: shoplistItem.id };
-    return mutation.mutate(payload);
-  };
+      payload: {
+        name: values.name,
+        ticked: isEdit ? shoplistItem?.ticked : undefined,
+      },
+    });
 
   //#endregion
 

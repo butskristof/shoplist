@@ -6,10 +6,10 @@ import LeftRightHeader from '@/components/common/LeftRightHeader.tsx';
 import IconButton from '@/components/common/IconButton.tsx';
 import EditShoplistItem from '@/components/lists/detail/EditShoplistItem.tsx';
 import DeleteShoplistItem from '@/components/lists/detail/DeleteShoplistItem.tsx';
-import { GetListResponse, ListItem } from '@/types/shoplists-api/lists/GetList.types.ts';
+import { List, ListItem } from '@/components/lists/detail/Shoplist.tsx';
 
 interface Props {
-  list: GetListResponse;
+  list: List;
 }
 
 const ShoplistItems: FC<Props> = ({ list }) => {
@@ -77,6 +77,7 @@ const ShoplistItems: FC<Props> = ({ list }) => {
         <DeleteShoplistItem
           onClose={closeDelete}
           item={itemForDelete}
+          listId={list.id}
         />
       )}
     </>

@@ -33,13 +33,14 @@ export const ShoplistsApi = {
 
   //#region list items
 
-  createItem: (payload: CreateListItemRequest) =>
-    api.post<CreateListItemResponse>(`lists/${payload.listId}/items`, payload).then((r) => r.data),
+  createItem: (listId: string, payload: CreateListItemRequest) =>
+    api.post<CreateListItemResponse>(`lists/${listId}/items`, payload).then((r) => r.data),
 
-  updateItem: (payload: UpdateListItemRequest) =>
-    api.put<null>(`lists/${payload.listId}/items/${payload.id}`, payload).then((r) => r.data),
+  updateItem: (id: string, listId: string, payload: UpdateListItemRequest) =>
+    api.put<null>(`lists/${listId}/items/${id}`, payload).then((r) => r.data),
 
-  deleteItem: (id: string) => api.delete<null>(`/items/${id}`).then((r) => r.data),
+  deleteItem: (id: string, listId: string) =>
+    api.delete<null>(`/lists/${listId}/items/${id}`).then((r) => r.data),
 
   //#endregion
 };

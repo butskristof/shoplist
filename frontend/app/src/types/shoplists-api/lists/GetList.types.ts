@@ -1,10 +1,10 @@
 export interface GetListResponse {
   id: string;
   name: string;
-  items: ListItem[];
+  items: GetListResponseListItem[];
 }
 
-export interface ListItem {
+export interface GetListResponseListItem {
   id: string;
   name: string;
   ticked: boolean;

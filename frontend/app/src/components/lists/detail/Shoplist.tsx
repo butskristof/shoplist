@@ -6,10 +6,21 @@ import IconButton from '@/components/common/IconButton.tsx';
 import ShoplistItems from '@/components/lists/detail/ShoplistItems.tsx';
 import DeleteShoplist from '@/components/lists/detail/DeleteShoplist.tsx';
 import EditShoplist from '@/components/lists/common/EditShoplist.tsx';
-import { GetListResponse } from '@/types/shoplists-api/lists/GetList.types.ts';
+
+export interface List {
+  id: string;
+  name: string;
+  items: ListItem[];
+}
+
+export interface ListItem {
+  id: string;
+  name: string;
+  ticked: boolean;
+}
 
 interface Props {
-  list: GetListResponse;
+  list: List;
 }
 
 const Shoplist: FC<Props> = ({ list }) => {
@@ -67,7 +78,7 @@ const Shoplist: FC<Props> = ({ list }) => {
       {showEdit && (
         <EditShoplist
           onClose={() => setShowEdit(false)}
-          shoplist={list}
+          list={list}
         />
       )}
 

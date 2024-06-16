@@ -5,8 +5,8 @@ import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { useShoplistsApiUpsertItem } from '@/data/shoplists-api.ts';
 import AppCard from '@/components/common/AppCard.tsx';
 import classes from './ShoplistItem.module.scss';
-import { ListItem } from '@/types/shoplists-api/lists/GetList.types.ts';
 import { UpdateListItemRequest } from '@/types/shoplists-api/listitems/UpdateListItem.types.ts';
+import { ListItem } from '@/components/lists/detail/Shoplist.tsx';
 
 interface Props {
   listId: string;
@@ -24,9 +24,12 @@ const ShoplistItem: FC<Props> = ({ listId, item, onEdit, onDelete }) => {
     const payload: UpdateListItemRequest = {
       ...item,
       ticked: event.target.checked,
-      listId,
     };
-    mutation.mutate(payload);
+    mutation.mutate({
+      id: item.id,
+      listId,
+      payload,
+    });
   };
 
   return (
