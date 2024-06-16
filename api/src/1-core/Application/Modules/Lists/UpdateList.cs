@@ -10,9 +10,17 @@ namespace Shoplists.Application.Modules.Lists;
 
 public static class UpdateList
 {
-    public sealed record Request(Guid Id, string Name) : IRequest<ErrorOr<Updated>>;
+    public record Request(string Name);
 
-    internal sealed class Validator : AbstractValidator<Request>
+    public sealed record Command(Guid Id, string Name) : Request(Name), IRequest<ErrorOr<Updated>>
+    {
+        public Command(Guid Id, Request request)
+            : this(Id, request.Name)
+        {
+        }
+    }
+
+    internal sealed class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
@@ -22,7 +30,7 @@ public static class UpdateList
         }
     }
 
-    internal sealed class Handler : IRequestHandler<Request, ErrorOr<Updated>>
+    internal sealed class Handler : IRequestHandler<Command, ErrorOr<Updated>>
     {
         #region construction
 
@@ -37,36 +45,36 @@ public static class UpdateList
 
         #endregion
 
-        public async Task<ErrorOr<Updated>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Updated>> Handle(Command command, CancellationToken cancellationToken)
         {
             _logger.LogDebug("Updating a List");
 
             var list = await _dbContext
                 .CurrentUserLists(true)
-                .SingleOrDefaultAsync(l => l.Id == request.Id, cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(l => l.Id == command.Id, cancellationToken: cancellationToken);
             if (list is null)
             {
                 _logger.LogDebug(
                     "Failed to fetch list with ID {Id} from database: does not exist or does not belong to this user",
-                    request.Id);
-                return Error.NotFound(nameof(request.Id), $"Could not find List with id {request.Id}");
+                    command.Id);
+                return Error.NotFound(nameof(command.Id), $"Could not find List with id {command.Id}");
             }
 
             if (await _dbContext
                     .CurrentUserLists(false)
                     // name should be configured with case-insensitive collation
-                    .AnyAsync(l => l.Name == request.Name && l.Id != list.Id,
+                    .AnyAsync(l => l.Name == command.Name && l.Id != list.Id,
                         cancellationToken: cancellationToken))
             {
-                return Error.Conflict(nameof(request.Name));
+                return Error.Conflict(nameof(command.Name));
             }
 
-            list.Name = request.Name.Trim();
+            list.Name = command.Name.Trim();
             _logger.LogDebug("Applied changes from request to entity");
 
             await _dbContext.SaveChangesAsync(CancellationToken.None);
             _logger.LogDebug("Persisted changes to database");
-            
+
             return Result.Updated;
         }
     }
