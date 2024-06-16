@@ -7,9 +7,9 @@ namespace Shoplists.Api.Modules;
 
 internal static class Lists
 {
-    private const string GroupName = "Lists";
+    internal const string GroupName = "Lists";
 
-    internal static void MapListsEndpoints(this IEndpointRouteBuilder endpoints)
+    internal static IEndpointRouteBuilder MapListsEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var group = endpoints
             .MapGroup($"/{GroupName}")
@@ -45,6 +45,8 @@ internal static class Lists
             .WithName(nameof(DeleteList))
             .ProducesNoContent()
             .ProducesNotFound();
+
+        return endpoints;
     }
 
     private static Task<IResult> GetLists([FromServices] ISender sender)

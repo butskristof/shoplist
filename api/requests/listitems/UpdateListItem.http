@@ -1,0 +1,13 @@
+@listId=dd2aac79-af58-4821-8b02-352632d34615
+@itemId=b2be712c-fc0b-4711-ab2d-e969d7627255
+
+PUT {{BASE_URL}}/lists/{{listId}}/items/{{itemId}}
+Authorization: Bearer {{ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+    "id": "{{itemId}}",
+    "name": "updated item",
+    "ticked": true,
+    "listId": "{{listId}}"
+}
