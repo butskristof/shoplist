@@ -16,7 +16,7 @@ public static class DependencyInjection
             {
                 Action<NpgsqlDbContextOptionsBuilder> sqlServerOptionsAction = optionsBuilder =>
                 {
-                    optionsBuilder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                    // optionsBuilder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                 };
 
                 if (connectionString is not null)

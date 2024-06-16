@@ -8,7 +8,7 @@ using Shoplists.Persistence.Common;
 
 namespace Shoplists.Persistence;
 
-internal sealed class AppDbContext : DbContext, IAppDbContext
+public sealed class AppDbContext : DbContext, IAppDbContext
 {
     #region construction
 
