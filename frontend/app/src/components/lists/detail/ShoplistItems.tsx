@@ -69,7 +69,7 @@ const ShoplistItems: FC<Props> = ({ list }) => {
         <EditShoplistItem
           listId={list.id}
           onClose={closeEdit}
-          shoplistItem={itemForEdit}
+          item={itemForEdit}
         />
       )}
 

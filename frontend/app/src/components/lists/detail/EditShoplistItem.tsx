@@ -19,11 +19,11 @@ type FormSchemaType = yup.InferType<typeof schema>;
 interface Props {
   listId: string;
   onClose: () => void;
-  shoplistItem?: ListItem;
+  item?: ListItem;
 }
 
-const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
-  const isEdit = shoplistItem != null;
+const EditShoplistItem: FC<Props> = ({ listId, onClose, item }) => {
+  const isEdit = item != null;
 
   //#region mutation
 
@@ -41,18 +41,18 @@ const EditShoplistItem: FC<Props> = ({ listId, onClose, shoplistItem }) => {
   } = useForm<FormSchemaType>({
     resolver: yupResolver(schema),
     defaultValues: {
-      name: shoplistItem?.name ?? '',
+      name: item?.name ?? '',
     },
   });
   const isFormDisabled = mutation.isPending || mutation.isSuccess;
 
   const saveItem: SubmitHandler<FormSchemaType> = (values: FormSchemaType) =>
     mutation.mutate({
-      id: isEdit ? shoplistItem?.id : undefined,
+      id: isEdit ? item?.id : undefined,
       listId,
       payload: {
         name: values.name,
-        ticked: isEdit ? shoplistItem?.ticked : undefined,
+        ticked: isEdit ? item?.ticked : undefined,
       },
     });
 
